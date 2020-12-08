@@ -19,22 +19,6 @@
       }
     </style>
 
-    <!-- <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>-->
-
     <title>Pisazon Homepage</title>
     
     <!-- Custom styles for this template -->
@@ -49,24 +33,20 @@
 <!-- Begin page content -->
 <main class="flex-shrink-0">
 <div class="card img-fluid">
-  <img class="card-img-top blur" src="assets/images/pisa.jpg" alt="Card image">
+  <img class="card-img-top blur" src="assets/images/pisa-background.jpg" alt="Card image">
   <div class="card-img-overlay container">
-  <h1 class="mt-5">Sticky footer with fixed navbar</h1>
-    <p class="lead">Pin a footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code class="small">padding-top: 60px;</code> on the <code class="small">main &gt; .container</code>.</p>
-    <p>Back to <a href="examples/sticky-footer/">the default sticky footer</a> minus the navbar.</p>
+  <h1 class="mt-5">Home Page</h1>
+    <p class="lead">This part of the website is on custruction.</p>
+    <p>Be patient, we are working for you.</p>
   </div>
 </div>
 </main>
 
 <footer class="footer mt-auto py-3 bg-light">
   <div class="container">
-    <span class="text-muted">Place sticky footer content here.</span>
+    <span class="text-muted">&copy; 2020 System Network Hacking - security.txt</span>
   </div>
 </footer>
-
-
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-
-      
   </body>
 </html>
