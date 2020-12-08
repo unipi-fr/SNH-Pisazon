@@ -2,15 +2,7 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="registration form for Pisazon store">
-  <meta name="author" content="security.txt">
-  <title>Pisazon: ebook store</title>
-
-
-  <!-- core CSS -->
-  <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <?php include 'commonHeader.php'; ?>
 
   <style>
     .bd-placeholder-img {
@@ -28,19 +20,21 @@
     }
   </style>
 
+<title>Pisazon Registration</title>
 
   <!-- Custom styles for this template -->
-  <link href="form-validation.css" rel="stylesheet">
+  <link href="assets/dist/css/registration-validation.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
+  <header>
+    <?php include 'navBar.php'; ?>
+  </header>
+
 
   <div class="container">
     <main>
       <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-        <h2>TITOLO SOTTO LOGO</h2>
-        <p class="lead">sottotitolo</p>
       </div>
 
       <div class="row g-3">
@@ -85,9 +79,9 @@
   </div>
 
 
-  <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script src="form-validation.js"></script>
+  <script src="assets/dist/js/registration-validation.js"></script>
 </body>
 
 </html>
