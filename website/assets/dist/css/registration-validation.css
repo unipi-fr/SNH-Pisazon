@@ -1,3 +1,7 @@
 .container {
   max-width: 960px;
 }
+
+.py-5 {
+  margin-bottom: 60px;
+}

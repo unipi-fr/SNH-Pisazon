@@ -43,7 +43,7 @@
           <div class="row g-3">
             <div class="col-sm-6">
               <label for="Username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="Username" placeholder="Tizio420" value="" required>
+              <input type="text" class="form-control" id="Username" placeholder="Tizio" value="" required>
               <div class="invalid-feedback">
                 Please enter a valid username.
               </div>
@@ -51,7 +51,7 @@
 
             <div class="col-sm-6">
               <label for="password" class="form-label">Password</label>
-              <input type="text" class="form-control" id="password" placeholder="" value="" required>
+              <input type="password" class="form-control" id="password" placeholder="" value="" required>
               <div class="invalid-feedback">
                 Please enter a valid password.
               </div>
@@ -68,7 +68,7 @@
 
           <hr class="my-4">
 
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Register</button>
+          <button class="w-100 btn btn-dark btn-lg" type="submit">Register</button>
         </form>
       </div>
     </main>
