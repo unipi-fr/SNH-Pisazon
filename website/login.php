@@ -8,9 +8,14 @@
 </head>
 
 <body class="text-center">
+
+    <header>
+      <?php include 'navBar.php'; ?>
+    </header>
+
     <main class="form-signin">
         <form method="post" action="./loginManager.php">
-            <img src="assets/images/icon.png" class="mb-4" height="60">
+        <img src="assets/images/icon.png" class="mb-4" height="60">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
             <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
             <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
@@ -25,7 +30,7 @@
                 unset($_SESSION['errorMessage']);
             }
             ?>
-            <p> Don't have an account yet? <a href="#" class="link-primary">Sign up</a></p>
+            <p> Don't have an account yet? <a href="register.php" class="link-primary">Sign up</a></p>
         </form>
     </main>
 </body>
