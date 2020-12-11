@@ -7,3 +7,5 @@
 
 <!-- Bootstrap core CSS -->
 <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Common CSS -->
+<link href="assets/dist/css/common.css" rel="stylesheet">
