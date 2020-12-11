@@ -1,14 +1,16 @@
 <?php
+	session_start();
+
     require "dbManager.php";
 	
 	$username = $_POST['email'];
 	$password = $_POST['password'];
 	
 	$errorMessage = login($username, $password);
-	if($errorMessage === null)
+	if($errorMessage === null) {
+		$_SESSION['cart'] = array();
 		header('location: ./index.php');
-	else {
-		session_start();
+	} else {
 		$_SESSION['errorMessage'] = $errorMessage;
 		header('location: ./login.php');
 	}
@@ -16,9 +18,8 @@
 	function login($username, $password){   
 		if ($username != null && $password != null){
 			$ret = authenticate($username, $password);
-    		if ($ret > 0){
-    			session_start();
-    			$_SESSION['username'] = $_POST['username'];
+    		if ($ret != 0){
+    			$_SESSION['username'] = $ret;
     			return null;
     		}
 
@@ -40,33 +41,9 @@
 		if ($numRow != 1)
 			return 0;
 		
-		$db->closeConnection();
-		return 1;
-	}
-	
-	function register($username, $password) {
-		if ($username == null || $password == null)
-			return 'Username or password invalid.';
-		
-		global $db;
-		$username = $db->sqlInjectionFilter($username);
-		
-		$queryText = 'SELECT * FROM Player WHERE Username=\'' . $username . '\'';
-		$result = $db->performQuery($queryText);
-	
-		if($result->num_rows === 1)
-			return 'username already used';
-		
-		$password = $db->sqlInjectionFilter($password);
-		$score = 0;
-		$score = $db->sqlInjectionFilter($score);
-		$queryText = 'INSERT INTO Player (Username, Password, BestScore) VALUES (\'' . $username . '\',\'' . $password . '\',' . $score . ')';
-		$db->performQuery($queryText);
+		$row = $result->fetch_assoc();
 		$db->closeConnection();
 		
-		session_start();
-    	$_SESSION['username'] = $_POST['username'];
-		
-		return null;
+		return $row['username'];
 	}
 ?>
