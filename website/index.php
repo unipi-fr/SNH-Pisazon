@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html lang="en" class="h-100">
   <head>
@@ -12,16 +13,20 @@
     <header>
       <?php include 'navBar.php'; ?>
     </header>
-
-    <!-- Begin page content -->
-    <main class="flex-shrink-0">
-      <div class="card img-fluid">
+    <?php if (false){?>
+    <div class="card img-fluid">
         <img class="card-img-top img-blur" src="assets/images/pisa-background.jpg" alt="Card image">
         <div class="card-img-overlay container">
-          <h1>Home Page</h1>
-          <p class="lead">This part of the website is on custruction.</p>
-          <p>Be patient, we are working for you.</p>
-          <div class="row">
+            <h1>Home Page</h1>
+            <p class="lead">This part of the website is on custruction.</p>
+            <p>Be patient, we are working for you.</p>
+        </div>
+    </div>
+    <?php }?>
+
+    <!-- Begin page content -->
+    <div class="container">
+        <div class="row">
             <?php for ($i = 1; $i < 10; $i++) { ?>
                 <div class="card col-auto mb-3 me-3" style="width: 18rem;">
                     <img src="assets/images/default-coverpage.jpg" class="card-img-top" alt="coverpage">
@@ -32,10 +37,8 @@
                     </div>
                 </div>
             <?php } ?>
-          </div>
         </div>
-      </div>
-    </main>
+    </div>
 
     <footer class="footer mt-auto py-3 bg-light">
       <div class="container">

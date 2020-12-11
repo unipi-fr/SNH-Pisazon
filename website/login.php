@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html lang="en" class="h-100">
 
@@ -22,7 +23,6 @@
             </br>
             <button class="w-100 btn btn-lg btn-dark" type="submit">Login</button>
             <?php
-            session_start();
             if (isset($_SESSION['errorMessage'])) {
                 echo '<div class="alert alert-danger" role="alert">';
                 echo $_SESSION['errorMessage'];
