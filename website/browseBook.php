@@ -53,9 +53,11 @@
                                     <div class="col-md-4">
                                         <p class="card-text" style="padding-top:0.5rem"> Price: <?php echo $row["price"] ?>€</p>
                                     </div>
-                                    <div class="col-md-8" style="padding-left: 1rem;">
-                                        <a href="#" class="btn btn-primary cart-button" <?php echo 'id="'.$row["id"].'"'?>> add to cart</a>
-                                    </div>
+                                    <?php if (isset($_SESSION['username'])) { ?>
+                                        <div class="col-md-8" style="padding-left: 1rem;">
+                                            <a href="#" class="btn btn-primary cart-button" <?php echo 'id="' . $row["id"] . '"' ?>> add to cart</a>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>

@@ -15,7 +15,7 @@ require "dbManager.php";
             $('.cart-button').click(function() {
                 $.ajax({
                     type: "POST",
-                    url: "cartHandler.php/addItem",
+                    url: "cartHandler.php",
                     data: {
                         id: $(this).attr('id'),
                         action: "deleteItem"
