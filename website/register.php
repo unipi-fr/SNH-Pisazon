@@ -1,3 +1,12 @@
+<?php 
+session_start();
+require "sessionManager.php";
+  
+if(isUserLogged()){
+  header('location: index.php');
+}
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -38,12 +47,12 @@
       </div>
 
       <div class="row g-3">
-        <h4 class="mb-3">Titolo sopra il form un pochino a sx</h4>
-        <form class="needs-validation" novalidate>
+        <h4 class="mb-3">Insert required data</h4>
+        <form class="needs-validation" method="post" novalidate action="registerManager.php">
           <div class="row g-3">
             <div class="col-sm-6">
-              <label for="Username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="Username" placeholder="Tizio" value="" required>
+              <label for="username" class="form-label">Username</label>
+              <input type="text" class="form-control" name="username" id="username" placeholder="Tizio" value="" required>
               <div class="invalid-feedback">
                 Please enter a valid username.
               </div>
@@ -51,7 +60,7 @@
 
             <div class="col-sm-6">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="" value="" required>
+              <input type="password" class="form-control" name="password" id="password" placeholder="" value="" required>
               <div class="invalid-feedback">
                 Please enter a valid password.
               </div>
@@ -59,7 +68,7 @@
 
             <div class="col-12">
               <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com" value="" required>
+              <input type="email" class="form-control" name="email" id="email" placeholder="you@example.com" value="" required>
               <div class="invalid-feedback">
                 Please enter a valid email address.
               </div>

@@ -51,5 +51,11 @@
 				
 			return $this->conn->real_escape_string($parameter);
 		}
+
+		function getConn(){
+			if (!$this->isOpened())
+				$this->openConnection();
+			return $this->conn;
+		}
 	}
 ?>

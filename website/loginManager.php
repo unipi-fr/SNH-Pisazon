@@ -1,16 +1,17 @@
 <?php
 session_start();
 
+require "sessionManager.php";
 require "dbManager.php";
 
 if (isset($_GET['logout'])) {
 	logout();
 } else {
 
-	$username = $_POST['email'];
+	$email = $_POST['email'];
 	$password = $_POST['password'];
 
-	$errorMessage = login($username, $password);
+	$errorMessage = login($email, $password);
 	if ($errorMessage === null) {
 		$_SESSION['cart'] = array();
 		header('location: ./index.php');
@@ -20,10 +21,10 @@ if (isset($_GET['logout'])) {
 	}
 }
 
-function login($username, $password)
+function login($email, $password)
 {
-	if ($username != null && $password != null) {
-		$ret = authenticate($username, $password);
+	if ($email != null && $password != null) {
+		$ret = authenticate($email, $password);
 		if ($ret != 0) {
 			$_SESSION['username'] = $ret;
 			return null;
@@ -34,13 +35,12 @@ function login($username, $password)
 	return 'Username or password invalid.';
 }
 
-function authenticate($username, $password)
+function authenticate($email, $password)
 {
 	global $db;
-	$username = $db->sqlInjectionFilter($username);
-	$password = $db->sqlInjectionFilter($password);
+	$email = $db->sqlInjectionFilter($email);
 
-	$queryText = "select * from User where email='" . $username . "' AND hash_pass='" . $password . "'";
+	$queryText = "select * from user where email='" . $email ."';";
 
 	$result = $db->performQuery($queryText);
 	$numRow = mysqli_num_rows($result);
@@ -50,11 +50,14 @@ function authenticate($username, $password)
 	$row = $result->fetch_assoc();
 	$db->closeConnection();
 
-	return $row['username'];
-}
+	$hash_pass = $row['hash_pass'];
 
-function logout()
-{
-	session_unset();
-	header('location: ./index.php');
+	if(password_verify($password, $hash_pass)){
+		return $row['username'];
+	}
+	else{
+		return 0;
+	}
+
+	
 }
