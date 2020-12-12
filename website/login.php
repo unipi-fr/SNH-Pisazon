@@ -30,7 +30,7 @@
                 unset($_SESSION['errorMessage']);
             }
             ?>
-            <p> Don't have an account yet? <a href="loginManager.php?logout=true" class="link-dark">Register</a></p>
+            <p> Don't have an account yet? <a href="register.php" class="link-dark">Register</a></p>
         </form>
     </main>
 </body>

@@ -49,14 +49,10 @@
                             <div class="card-body">
                                 <h5 class="card-title">Title: <?php echo $row["title"] ?></h5>
                                 <p class="card-text"> Author: <?php echo $row["author"] ?> </p>
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <p class="card-text" style="padding-top:0.5rem"> Price: <?php echo $row["price"] ?>€</p>
-                                    </div>
+                                <div>
+                                    <p class="card-text me-auto" style="padding-top:0.5rem"> Price: <?php echo $row["price"] ?>€ </p>
                                     <?php if (isset($_SESSION['username'])) { ?>
-                                        <div class="col-md-8" style="padding-left: 1rem;">
-                                            <a href="#" class="btn btn-primary cart-button" <?php echo 'id="' . $row["id"] . '"' ?>> add to cart</a>
-                                        </div>
+                                        <a href="#" class="btn btn-primary cart-button pull-right" <?php echo 'id="' . $row["id"] . '"' ?>> Buy </a>
                                     <?php } ?>
                                 </div>
                             </div>

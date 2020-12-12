@@ -40,7 +40,7 @@ function authenticate($username, $password)
 	$username = $db->sqlInjectionFilter($username);
 	$password = $db->sqlInjectionFilter($password);
 
-	$queryText = "select * from User where email='" . $username . "' AND password='" . $password . "'";
+	$queryText = "select * from User where email='" . $username . "' AND hash_pass='" . $password . "'";
 
 	$result = $db->performQuery($queryText);
 	$numRow = mysqli_num_rows($result);

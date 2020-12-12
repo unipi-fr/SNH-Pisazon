@@ -2,5 +2,5 @@
 	$dbHostname = "localhost";
 	$dbUsername = "root"; 
 	$dbPassword = ""; 
-	$dbName = "Pisazon";	
+	$dbName = "pisazon";	
 ?>
