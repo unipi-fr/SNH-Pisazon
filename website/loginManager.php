@@ -26,7 +26,8 @@ function login($email, $password)
 	if ($email != null && $password != null) {
 		$ret = authenticate($email, $password);
 		if ($ret != 0) {
-			$_SESSION['username'] = $ret;
+			$_SESSION['username'] = $ret['username'];
+			$_SESSION['idUser'] = $ret['id'];
 			return null;
 		}
 	} else
@@ -53,7 +54,7 @@ function authenticate($email, $password)
 	$hash_pass = $row['hash_pass'];
 
 	if(password_verify($password, $hash_pass)){
-		return $row['username'];
+		return $row;
 	}
 	else{
 		return 0;

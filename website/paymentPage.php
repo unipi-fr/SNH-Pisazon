@@ -12,7 +12,8 @@
     </header>
 
     <main class="flex-shrink-0">
-        <form>
+        <form method="post" action="./paymentManager.php">
+            <input name="action" value="payItem" type="hidden">
             <div class="mb-3">
                 <label for="cardNumber" class="form-label">Card Number</label>
                 <input type="text" class="form-control" id="cardNumber">

@@ -11,13 +11,13 @@
             $('.cart-button').click(function() {
                 $.ajax({
                     type: "POST",
-                    url: "cartHandler.php",
+                    url: "paymentManager.php",
                     data: {
                         id: $(this).attr('id'),
-                        action: "addItem"
+                        action: "setItem"
                     }
                 }).done(function(msg) {
-                    alert(msg);
+                    window.location.replace("paymentPage.php");
                 });
             });
         });
@@ -44,16 +44,22 @@
 
                     <?php while ($row = $result->fetch_assoc()) { ?>
 
-                        <div class="card col-auto mb-3 me-3" style="width: 15rem;">
+                        <div class="card mb-3 me-3" style="width: 18rem;">
                             <img src="assets/images/default-coverpage.jpg" class="card-img-top" alt="coverpage">
                             <div class="card-body">
                                 <h5 class="card-title">Title: <?php echo $row["title"] ?></h5>
                                 <p class="card-text"> Author: <?php echo $row["author"] ?> </p>
-                                <div>
-                                    <p class="card-text me-auto" style="padding-top:0.5rem"> Price: <?php echo $row["price"] ?>€ </p>
-                                    <?php if (isset($_SESSION['username'])) { ?>
-                                        <a href="#" class="btn btn-primary cart-button pull-right" <?php echo 'id="' . $row["id"] . '"' ?>> Buy </a>
-                                    <?php } ?>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col md-6">
+                                            <p class="card-text"> Price: <?php echo $row["price"] ?>€ </p>
+                                        </div>
+                                        <div class="col md-6">
+                                            <?php if (isset($_SESSION['username'])) { ?>
+                                                <a href="./paymentPage.php" class="btn btn-primary cart-button float-right" <?php echo 'id="' . $row["id"] . '"' ?>> Buy </a>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
