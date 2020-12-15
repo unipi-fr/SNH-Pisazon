@@ -4,14 +4,23 @@
 
 <head>
     <?php include 'commonHeader.php'; ?>
+    <link href="assets/dist/css/generalCentralForm.css" rel="stylesheet">
 </head>
 
-<body class="with-navbar d-flex flex-column h-100">
+<body class="text-center">
     <header>
         <?php include 'navBar.php'; ?>
     </header>
 
-    <main class="flex-shrink-0">
+    <main class="central-form">
+
+        <?php if (isset($_SESSION['errorMessage'])) { ?>
+            <div class="alert alert-danger mb-3" role="alert">
+                <?php echo $_SESSION['errorMessage']; ?>
+            </div>
+            <?php unset($_SESSION['errorMessage']); ?>
+        <?php } ?>
+
         <form method="post" action="./paymentManager.php">
             <input name="action" value="payItem" type="hidden">
             <div class="mb-3">
@@ -27,29 +36,21 @@
                     <label class="form-label">expire:</label>
                     <div class="row mb-3">
                         <div class="col">
-                            <input type="number" class="form-control" placeholder="month">
+                            <input type="text" class="form-control" placeholder="mm">
                         </div>
                         <div class="col">
-                            <input type="number" class="form-control" placeholder="year">
+                            <input type="text" class="form-control" placeholder="yy">
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <label for="cvv" class="form-label">cvv</label>
-                    <input type="number" class="form-control" id="cvv">
+                    <input type="text" class="form-control" id="cvv">
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </main>
-
-    <footer class="footer mt-auto py-3 bg-light">
-        <div class="container">
-            <span class="text-muted">&copy; 2020 System Network Hacking - security.txt</span>
-        </div>
-    </footer>
-
-    <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

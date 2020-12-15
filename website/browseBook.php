@@ -33,6 +33,7 @@
         <?php
 
         require "dbManager.php";
+        require "drawer.php";
 
         $queryText = 'SELECT * FROM ebook';
         $result = $db->performQuery($queryText);
@@ -42,29 +43,11 @@
             <div class="container">
                 <div class="row">
 
-                    <?php while ($row = $result->fetch_assoc()) { ?>
+                    <?php while ($row = $result->fetch_assoc()) {
 
-                        <div class="card mb-3 me-3" style="width: 18rem;">
-                            <img src="assets/images/default-coverpage.jpg" class="card-img-top" alt="coverpage">
-                            <div class="card-body">
-                                <h5 class="card-title">Title: <?php echo $row["title"] ?></h5>
-                                <p class="card-text"> Author: <?php echo $row["author"] ?> </p>
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col md-6">
-                                            <p class="card-text"> Price: <?php echo $row["price"] ?>€ </p>
-                                        </div>
-                                        <div class="col md-6">
-                                            <?php if (isset($_SESSION['username'])) { ?>
-                                                <a href="./paymentPage.php" class="btn btn-primary cart-button float-right" <?php echo 'id="' . $row["id"] . '"' ?>> Buy </a>
-                                            <?php } ?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        drawCard($row["title"], $row["author"], $row["price"], $row["id"]);
 
-                    <?php } ?>
+                    } ?>
                 </div>
             </div>
         <?php } ?>
