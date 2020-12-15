@@ -25,7 +25,7 @@
             <input name="action" value="payItem" type="hidden">
             <div class="mb-3">
                 <label for="cardNumber" class="form-label">Card Number</label>
-                <input type="text" class="form-control" id="cardNumber" required pattern = "^[0-9 ]{19}$">
+                <input type="text" class="form-control" id="cardNumber" required pattern="^[0-9 ]{19}$">
             </div>
             <div class="mb-3">
                 <label for="owner" class="form-label">Owner</label>
@@ -36,7 +36,7 @@
                     <label class="form-label">expire:</label>
                     <div class="row mb-3">
                         <div class="col">
-                            <select class="form-select" required>
+                            <select id="monthSelect" class="form-select" onchange="checkDate()" required>
                                 <option value="01">January</option>
                                 <option value="02">February </option>
                                 <option value="03">March</option>
@@ -52,17 +52,17 @@
                             </select>
                         </div>
                         <div class="col">
-                            <select class="form-select" required>
-                                <option value="16"> 2020</option>
-                                <option value="17"> 2021</option>
-                                <option value="18"> 2022</option>
-                                <option value="19"> 2023</option>
-                                <option value="20"> 2024</option>
-                                <option value="21"> 2025</option>
-                                <option value="21"> 2026</option>
-                                <option value="21"> 2027</option>
-                                <option value="21"> 2028</option>
-                                <option value="21"> 2029</option>
+                            <select id="yearSelect" class="form-select" onchange="checkDate()" required>
+                                <option value="2020"> 2020</option>
+                                <option value="2021"> 2021</option>
+                                <option value="2022"> 2022</option>
+                                <option value="2023"> 2023</option>
+                                <option value="2024"> 2024</option>
+                                <option value="2025"> 2025</option>
+                                <option value="2026"> 2026</option>
+                                <option value="2027"> 2027</option>
+                                <option value="2028"> 2028</option>
+                                <option value="2029"> 2029</option>
                             </select>
                         </div>
                     </div>
@@ -75,6 +75,23 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </main>
+
+    <script>
+        function checkDate() {
+            var month = document.getElementById("monthSelect").value;
+            var year = document.getElementById("yearSelect").value;
+
+            var d = new Date();
+
+            var currentMonth = d.getMonth() + 1;
+            var currentYear = d.getFullYear();
+
+            if ((year < currentYear) || (year == currentYear && month <= currentMonth)) {
+                
+            }
+            
+        }
+    </script>
 </body>
 
 </html>
