@@ -12,8 +12,15 @@ function drawCard($title, $author, $price, $id, $type)
                         <p class="card-text"> Price: <?php echo $price ?>€ </p>
                     </div>
                     <div class="col md-6">
-                        <?php if (isset($_SESSION['username'])) { ?>
-                            <a href="./paymentPage.php" <?php echo 'class="btn btn-primary ' . $type . '-button float-right" id="' . $id . '"' ?>> <?php echo $type?> </a>
+                        <?php if (isset($_SESSION['username'])) {
+                            if (!(strcmp($type, "Buy"))) { ?>
+                                <a href="" <?php echo 'class="btn btn-primary ' . $type . '-button float-right" id="' . $id . '"' ?>> <?php echo $type ?> </a>
+                            <?php }
+                            if (!(strcmp($type, "Download"))) { ?>
+                                <form method="get" action="/ebook/Libro1.pdf">
+                                    <button type="submit" <?php echo 'class="btn btn-primary ' . $type . '-button float-right" id="' . $id . '"' ?>> <?php echo $type ?> </button>
+                                </form>
+                            <?php } ?>
                         <?php } ?>
                     </div>
                 </div>

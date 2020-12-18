@@ -43,7 +43,7 @@
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
 
-                        drawCard($row["title"], $row["author"], $row["price"], $row["id"], "buy");
+                        drawCard($row["title"], $row["author"], $row["price"], $row["id"], "Buy");
                     }
                 }
                 ?>
