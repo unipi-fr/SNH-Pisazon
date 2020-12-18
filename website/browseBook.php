@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('.cart-button').click(function() {
+            $('.buy-button').click(function() {
                 $.ajax({
                     type: "POST",
                     url: "paymentManager.php",
@@ -30,27 +30,25 @@
     </header>
 
     <main class="flex-shrink-0">
-        <?php
+        <div class="container">
+            <div class="row">
+                <?php
 
-        require "dbManager.php";
-        require "drawer.php";
+                require "dbManager.php";
+                require "drawer.php";
 
-        $queryText = 'SELECT * FROM ebook';
-        $result = $db->performQuery($queryText);
+                $queryText = 'SELECT * FROM ebook';
+                $result = $db->performQuery($queryText);
 
-        if ($result->num_rows > 0) { ?>
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
 
-            <div class="container">
-                <div class="row">
-
-                    <?php while ($row = $result->fetch_assoc()) {
-
-                        drawCard($row["title"], $row["author"], $row["price"], $row["id"]);
-
-                    } ?>
-                </div>
+                        drawCard($row["title"], $row["author"], $row["price"], $row["id"], "buy");
+                    }
+                }
+                ?>
             </div>
-        <?php } ?>
+        </div>
     </main>
 
     <footer class="footer mt-auto py-3 bg-light">

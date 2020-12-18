@@ -1,5 +1,5 @@
 <?php
-function drawCard($title, $author, $price, $id)
+function drawCard($title, $author, $price, $id, $type)
 { ?>
     <div class="card mb-3 me-3" style="width: 18rem;">
         <img src="assets/images/default-coverpage.jpg" class="card-img-top" alt="coverpage">
@@ -13,7 +13,7 @@ function drawCard($title, $author, $price, $id)
                     </div>
                     <div class="col md-6">
                         <?php if (isset($_SESSION['username'])) { ?>
-                            <a href="./paymentPage.php" class="btn btn-primary cart-button float-right" <?php echo 'id="' . $id . '"' ?>> Buy </a>
+                            <a href="./paymentPage.php" <?php echo 'class="btn btn-primary ' . $type . '-button float-right" id="' . $id . '"' ?>> <?php echo $type?> </a>
                         <?php } ?>
                     </div>
                 </div>

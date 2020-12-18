@@ -30,7 +30,7 @@ function payItem()
     $buyDate =  date("Y-m-d");
 
     $price = '60';
-
+    
     $buymentStatement = $conn->prepare("INSERT INTO orders (id_buyer, id_ebook, date, price) VALUES (?, ?, ?, ?)");
     $buymentStatement->bind_param("ssss", $_SESSION['idUser'], $_SESSION['buyingItem'], $buyDate, $price);
 

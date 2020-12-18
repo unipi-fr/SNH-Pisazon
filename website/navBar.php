@@ -27,7 +27,7 @@
           </li>
         <?php } else { ?>
           <li class="nav-item active me-2">
-            <a class="btn btn btn-outline-light" href=""><?php echo $_SESSION['username']; ?> </a>
+            <a class="btn btn btn-outline-light" href="profilePage.php"><?php echo $_SESSION['username']; ?> </a>
           </li>
           <li class="nav-item">
             <a class="btn btn-outline-secondary" href="cart.php">Shopping cart</a>

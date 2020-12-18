@@ -36,7 +36,7 @@
                     <label class="form-label">expire:</label>
                     <div class="row mb-3">
                         <div class="col">
-                            <select id="monthSelect" class="form-select" onchange="checkDate()" required>
+                            <select id="monthSelect" class="form-select" onchange="checkDate()">
                                 <option value="01">January</option>
                                 <option value="02">February </option>
                                 <option value="03">March</option>
@@ -52,17 +52,15 @@
                             </select>
                         </div>
                         <div class="col">
-                            <select id="yearSelect" class="form-select" onchange="checkDate()" required>
-                                <option value="2020"> 2020</option>
-                                <option value="2021"> 2021</option>
-                                <option value="2022"> 2022</option>
-                                <option value="2023"> 2023</option>
-                                <option value="2024"> 2024</option>
-                                <option value="2025"> 2025</option>
-                                <option value="2026"> 2026</option>
-                                <option value="2027"> 2027</option>
-                                <option value="2028"> 2028</option>
-                                <option value="2029"> 2029</option>
+                            <select id="yearSelect" class="form-select" onchange="checkDate()">
+                                <?php
+                                date_default_timezone_set('Europe/Rome');
+                                $currentYear =  date("Y");
+
+                                for ($i = 0; $i < 10; $i++) { 
+                                    $year = $currentYear + $i;?>
+                                    <option <?php echo 'value="' . $year . '"' ?>> <?php echo $year ?> </option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -87,9 +85,8 @@
             var currentYear = d.getFullYear();
 
             if ((year < currentYear) || (year == currentYear && month <= currentMonth)) {
-                
+
             }
-            
         }
     </script>
 </body>
