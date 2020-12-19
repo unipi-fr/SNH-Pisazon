@@ -10,6 +10,7 @@ function registrationFailed($reason){
     setErrorMessage($reason);
     header('location: register.php');
 }
+global $db;
 
 $conn = $db->getConn();
 
