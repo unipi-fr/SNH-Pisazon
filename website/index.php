@@ -18,7 +18,7 @@
         <img class="card-img-top img-blur" src="assets/images/pisa-background.jpg" alt="Card image">
         <div class="card-img-overlay container">
             <h1>Home Page</h1>
-            <p class="lead">This part of the website is on custruction.</p>
+            <p class="lead">This part of the website is on construction.</p>
             <p>Be patient, we are working for you.</p>
         </div>
     </div>

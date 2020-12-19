@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php require_once "sessionManager.php"?>
 <!doctype html>
 <html lang="en" class="h-100">
 
@@ -22,16 +22,10 @@
             <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
             </br>
             <button class="w-100 btn btn-lg btn-dark" type="submit">Login</button>
-            <?php
-            if (isset($_SESSION['errorMessage'])) {
-                echo '<div class="alert alert-danger" role="alert">';
-                echo $_SESSION['errorMessage'];
-                echo '</div>';
-                unset($_SESSION['errorMessage']);
-            }
-            ?>
             <p> Don't have an account yet? <a href="register.php" class="link-dark">Register</a></p>
         </form>
+        <?php printSuccessSessionMessage() ?>
+        <?php printErrorSessionMessage(); ?>
     </main>
 </body>
 

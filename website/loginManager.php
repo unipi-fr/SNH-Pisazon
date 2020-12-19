@@ -1,8 +1,6 @@
 <?php
-session_start();
-
-require "sessionManager.php";
-require "dbManager.php";
+require_once "sessionManager.php";
+require_once "dbManager.php";
 
 if (isset($_GET['logout'])) {
 	logout();
@@ -33,7 +31,7 @@ function login($email, $password)
 	} else
 		return 'You should insert something';
 
-	return 'Username or password invalid.';
+	return 'Invalid username or password';
 }
 
 function authenticate($email, $password)

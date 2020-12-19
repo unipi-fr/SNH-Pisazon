@@ -44,6 +44,7 @@ if(isUserLogged()){
   <div class="container">
     <main>
       <div class="py-5 text-center">
+
       </div>
 
       <div class="row g-3">
@@ -52,7 +53,7 @@ if(isUserLogged()){
           <div class="row g-3">
             <div class="col-sm-6">
               <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" name="username" id="username" placeholder="Tizio" value="" required>
+              <input type="text" class="form-control" name="username" id="username" placeholder="username" value="" required>
               <div class="invalid-feedback">
                 Please enter a valid username.
               </div>
@@ -60,7 +61,7 @@ if(isUserLogged()){
 
             <div class="col-sm-6">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" name="password" id="password" placeholder="" value="" required>
+              <input type="password" class="form-control" name="password" id="password" placeholder="super secret password" value="" required>
               <div class="invalid-feedback">
                 Please enter a valid password.
               </div>
@@ -80,6 +81,7 @@ if(isUserLogged()){
           <button class="w-100 btn btn-dark btn-lg" type="submit">Register</button>
         </form>
       </div>
+        <?php printErrorSessionMessage(); ?>
     </main>
 
     <footer class="my-5 pt-5 text-muted text-center text-small">

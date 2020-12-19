@@ -20,10 +20,10 @@
 				$this->conn = new mysqli($dbHostname, $dbUsername, $dbPassword);
 
 				if ($this->conn->connect_error) 
-					die("Connection failed: " . $conn->connect_error);
+					die("Connection failed: " . $this->conn->connect_error);
 					
 				$this->conn->select_db($dbName) or
-					die ('Can\'t use Pisazon: ' . mysqli_error($conn));
+					die ('Can\'t use Pisazon: ' . mysqli_error($this->conn));
 			}
 		}
 		
