@@ -30,9 +30,6 @@
             <a class="btn btn btn-outline-light" href="profilePage.php"><?php echo $_SESSION['username']; ?> </a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-outline-secondary" href="cart.php">Shopping cart</a>
-          </li>
-          <li class="nav-item">
             <a class="btn btn-outline-secondary" href="loginManager.php?logout=true">Logout</a>
           </li>
         <?php } ?>
