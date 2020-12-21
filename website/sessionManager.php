@@ -5,6 +5,14 @@ function isUserLogged(){
     return isset($_SESSION['username']);
 }
 
+function getSessionUserId(){
+	return $_SESSION['idUser'];
+}
+
+function getSessionUsername(){
+	return $_SESSION['username'];
+}
+
 function logout()
 {
 	session_unset();
@@ -33,7 +41,7 @@ function readErrorMessage($readOnce = true){
 function printErrorSessionMessage(){
 	if(isThereAnyErrorMessage()){
 		?>
-		<div class="alert alert-danger">
+		<div class="alert alert-danger mt-2">
 			<strong>Error!</strong> <?php echo readErrorMessage()?>
 		</div>
 		<?php
@@ -62,7 +70,7 @@ function readSuccessMessage($readOnce = true){
 function printSuccessSessionMessage(){
 	if(isThereAnySuccessMessage()){
 	?>
-		<div class="alert alert-success">
+		<div class="alert alert-success mt-2">
 			<strong>Success!</strong> <?php echo readSuccessMessage()?>
 		</div>
 	<?php

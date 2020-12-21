@@ -18,7 +18,7 @@ $conn = $db->getConn();
 
 $username = $email = $hash_pass = "";
 
-$result = $registrationStatement = $conn->prepare("INSERT INTO user (username, email, hash_pass) VALUES (?, ?, ?)");
+$result = $registrationStatement = $conn->prepare("INSERT INTO user (username, email, hash_pass) VALUES (?, ?, ?);");
 if($result === false){
     $message = "We can't elaborate your request. try later.";
     if($debugMessages){
@@ -61,7 +61,5 @@ if($result === false){
     setSuccessMessage("Registration complete.<br> now you can log in :-)");
     header('location: login.php');
 }
-
-
 $registrationStatement->close();
 ?>
