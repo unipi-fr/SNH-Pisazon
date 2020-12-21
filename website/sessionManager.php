@@ -34,7 +34,7 @@ function printErrorSessionMessage(){
 	if(isThereAnyErrorMessage()){
 		?>
 		<div class="alert alert-danger">
-			<strong>Error!</strong> <?php echo readErrorMessage()?>.
+			<strong>Error!</strong> <?php echo readErrorMessage()?>
 		</div>
 		<?php
 	}
@@ -63,7 +63,7 @@ function printSuccessSessionMessage(){
 	if(isThereAnySuccessMessage()){
 	?>
 		<div class="alert alert-success">
-			<strong>Success!</strong> <?php echo readSuccessMessage()?>.
+			<strong>Success!</strong> <?php echo readSuccessMessage()?>
 		</div>
 	<?php
 	}
