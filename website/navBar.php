@@ -1,4 +1,6 @@
-<?php ?>
+<?php 
+require_once "sessionManager.php";
+?>
 <!-- Fixed navbar -->
 <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
   <div class="container-fluid">
@@ -18,7 +20,7 @@
         </button>
       </form>
       <ul class="navbar-nav">
-        <?php if (!isset($_SESSION['username'])) { ?>
+        <?php if (!isUserLogged()) { ?>
           <li class="nav-item active me-2">
             <a class="btn btn btn-outline-light" href="login.php">Login</a>
           </li>

@@ -9,6 +9,7 @@ function login($email, $password)
 		$ret = authenticate($email, $password);
 		if ($ret != 0) {
 			$_SESSION['username'] = $ret['username'];
+			$_SESSION['email'] = $ret['email'];
 			$_SESSION['idUser'] = $ret['id'];
 			return null;
 		}
