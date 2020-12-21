@@ -9,14 +9,6 @@ require "drawer.php";
 
 <head>
     <?php include 'commonHeader.php'; ?>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.download-button').click(function() {
-
-            });
-        });
-    </script>
 </head>
 
 <body class="with-navbar d-flex flex-column h-100">
