@@ -36,13 +36,17 @@ require "bookManager.php"; ?>
             <div class="row">
                 <?php
 
-                $numPages = getHowManyPages();
+                $filter = "";
+                if(isset($_GET['title']))
+                    $filter = $_GET['title'];
+
+                $numPages = getHowManyPages($filter);
 
                 $activePage = 1;
-                if (isset($_GET['page']))
+                if (isset($_GET['page']) && is_numeric($_GET['page']))
                     $activePage = $_GET['page'];
 
-                $books = getBooks($activePage);
+                $books = getBooks($activePage, $filter);
 
                 foreach ($books as $book) {
                     drawCard($book["title"], $book["author"], $book["price"], $book["id"], "Buy");

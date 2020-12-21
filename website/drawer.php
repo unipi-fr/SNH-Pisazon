@@ -38,7 +38,23 @@ function drawPaginationNav($page, $numPages, $activePage)
             <li class="page-item <?php if ($activePage == 1) echo 'disabled'; ?> ">
                 <a class="page-link text-dark" <?php echo 'href="' . $page . '?page=' . ($activePage - 1) . '"' ?>>Previous</a>
             </li>
-            <?php for ($i = 1; $i <= $numPages; $i++) {
+            <?php
+            $endPage = $numPages;
+            $startPage = $activePage - 2;
+
+            if ($numPages > 5) {
+                if ($startPage + 5 <= $numPages) {
+                    if ($activePage < 3)
+                        $startPage = 1;
+                    $endPage = $startPage + 4;
+                } else {
+                    $startPage = $numPages - 4;
+                }
+            } else {
+                $startPage = 1;
+            }
+
+            for ($i = $startPage; $i <= $endPage; $i++) {
                 if ($i == $activePage) { ?>
                     <li class="page-item"><a class="page-link text-light bg-dark" <?php echo 'href="' . $page . '?page=' . $i . '"'; ?>> <?php echo $i; ?> </a></li>
                 <?php } else { ?>

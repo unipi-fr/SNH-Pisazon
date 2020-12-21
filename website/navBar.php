@@ -10,8 +10,8 @@ require_once "sessionManager.php";
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <div class="me-auto"></div>
-      <form class="d-flex me-auto col-md-4">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <form class="d-flex me-auto col-md-4" action="browseBook.php" method="get">
+        <input name="title" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn btn-outline-light" type="submit">
           <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
