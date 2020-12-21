@@ -1,4 +1,6 @@
-<?php session_start() ?>
+<?php
+require "drawer.php";
+require "bookManager.php"; ?>
 <!doctype html>
 <html lang="en" class="h-100">
 
@@ -34,18 +36,19 @@
             <div class="row">
                 <?php
 
-                require "dbManager.php";
-                require "drawer.php";
+                $numPages = getHowManyPages();
 
-                $queryText = 'SELECT * FROM ebook';
-                $result = $db->performQuery($queryText);
+                $activePage = 1;
+                if (isset($_GET['page']))
+                    $activePage = $_GET['page'];
 
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
+                $books = getBooks($activePage);
 
-                        drawCard($row["title"], $row["author"], $row["price"], $row["id"], "Buy");
-                    }
+                foreach ($books as $book) {
+                    drawCard($book["title"], $book["author"], $book["price"], $book["id"], "Buy");
                 }
+
+                drawPaginationNav("browseBook.php", $numPages, $activePage);
                 ?>
             </div>
         </div>
