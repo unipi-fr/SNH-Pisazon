@@ -70,13 +70,15 @@ if (!isUserLogged()) {
                         <div class="row">
                             <?php
 
-                            $numPages = getHowManyPagesBuyed();
+                            $sessionUser = getSessionUserId();
+                            
+                            $numPages = getHowManyPages("", $sessionUser);
 
                             $activePage = 1;
                             if (isset($_GET['page']) && is_numeric($_GET['page']))
                                 $activePage = $_GET['page'];
 
-                            $books = getBuyedBooks($activePage);
+                            $books = getBooks($activePage, "", $sessionUser);
 
                             foreach ($books as $book) {
                                 drawCard($book["title"], $book["author"], $book["price"], $book["id"], "Download");

@@ -37,20 +37,28 @@ require "bookManager.php"; ?>
             <div class="row">
                 <?php
 
+                $idBuyer = getSessionUserId();
+
                 $filter = "";
                 if (isset($_GET['title']))
                     $filter = $_GET['title'];
 
-                $numPages = getHowManyPages($filter);
+                $numPages = getHowManyPages($filter, -1);
 
                 $activePage = 1;
                 if (isset($_GET['page']) && is_numeric($_GET['page']))
                     $activePage = $_GET['page'];
 
-                $books = getBooks($activePage, $filter);
+                $books = getBooks($activePage, $filter, -1);
 
                 foreach ($books as $book) {
-                    drawCard($book["title"], $book["author"], $book["price"], $book["id"], "Buy");
+
+                    $type = "Buy";
+                    if($book["id_buyer"] == $idBuyer)
+                        $type = "Download";
+
+                    drawCard($book["title"], $book["author"], $book["price"], $book["id"], $type);
+                    
                 }
 
                 drawPaginationNav("browseBook.php", $numPages, $activePage);
