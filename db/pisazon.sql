@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2020 at 03:54 PM
+-- Generation Time: Dec 22, 2020 at 05:00 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -29,7 +29,6 @@ USE `pisazon`;
 -- Table structure for table `ebook`
 --
 
-DROP TABLE IF EXISTS `ebook`;
 CREATE TABLE `ebook` (
   `id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
@@ -37,20 +36,35 @@ CREATE TABLE `ebook` (
   `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `ebook`
+--
+
+INSERT INTO `ebook` (`id`, `title`, `author`, `price`) VALUES
+(1, 'Roba', 'Corsini', 300),
+(2, 'Cose', 'Stea', 400),
+(3, 'Terzo', 'Tonellotto', 0.5);
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `orders`
 --
 
-DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `id_buyer` int(11) NOT NULL,
   `id_ebook` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `price` float NOT NULL
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `id_buyer`, `id_ebook`, `date`) VALUES
+(1, 8, 1, '2020-12-22'),
+(2, 8, 2, '2020-12-22');
 
 -- --------------------------------------------------------
 
@@ -58,7 +72,6 @@ CREATE TABLE `orders` (
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(45) NOT NULL,
@@ -71,7 +84,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `hash_pass`) VALUES
-(1, 'boh', 'boh@gmail.com', '$2y$10$.FKsaUjhJvTgizT43f6dK.LZ.GM4rWGknnys8VoIDT3CS5N7dLRB6');
+(1, 'boh', 'boh@gmail.com', '$2y$10$.FKsaUjhJvTgizT43f6dK.LZ.GM4rWGknnys8VoIDT3CS5N7dLRB6'),
+(4, 'caio', 'caio@gmail.com', '$2y$10$vBHGmiaY8RljP60BumVUv.zKTD8TrEsSvz3xzgNKjpNXmE6vC/Cy2'),
+(8, 'tizio', 'tizio@mail.com', '$2y$10$4F8CeZWrKPK9Du0gTQUQOuW2L2BDOXOvZ/wd6C0.5HeSSwqWO7gWq');
 
 --
 -- Indexes for dumped tables
@@ -108,19 +123,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `ebook`
 --
 ALTER TABLE `ebook`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
