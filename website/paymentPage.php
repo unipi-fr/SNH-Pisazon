@@ -35,7 +35,7 @@
                     <label class="form-label">expire:</label>
                     <div class="row mb-3">
                         <div class="col">
-                            <select id="monthSelect" class="form-select" onchange="checkDate()">
+                            <select name="expireMonth" id="monthSelect" class="form-select">
                                 <option value="01">January</option>
                                 <option value="02">February </option>
                                 <option value="03">March</option>
@@ -51,7 +51,7 @@
                             </select>
                         </div>
                         <div class="col">
-                            <select id="yearSelect" class="form-select" onchange="checkDate()">
+                            <select name="expireYear" id="yearSelect" class="form-select">
                                 <?php
                                 date_default_timezone_set('Europe/Rome');
                                 $currentYear =  date("Y");
@@ -72,22 +72,6 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </main>
-
-    <script>
-        function checkDate() {
-            var month = document.getElementById("monthSelect").value;
-            var year = document.getElementById("yearSelect").value;
-
-            var d = new Date();
-
-            var currentMonth = d.getMonth() + 1;
-            var currentYear = d.getFullYear();
-
-            if ((year < currentYear) || (year == currentYear && month <= currentMonth)) {
-
-            }
-        }
-    </script>
 </body>
 
 </html>

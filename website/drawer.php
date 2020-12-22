@@ -1,7 +1,7 @@
 <?php
 function drawCard($title, $author, $price, $id, $type)
 { ?>
-    <div class="card mb-3 me-3" style="width: 19rem;">
+    <div class="card border-secondary mb-3 me-3" style="width: 19rem;">
         <img src="assets/images/default-coverpage.jpg" class="card-img-top" alt="coverpage">
         <div class="card-body">
             <h5 class="card-title">Title: <?php echo $title ?></h5>

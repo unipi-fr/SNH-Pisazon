@@ -32,12 +32,13 @@ require "bookManager.php"; ?>
     </header>
 
     <main class="flex-shrink-0">
+        <?php printSuccessSessionMessage() ?>
         <div class="container">
             <div class="row">
                 <?php
 
                 $filter = "";
-                if(isset($_GET['title']))
+                if (isset($_GET['title']))
                     $filter = $_GET['title'];
 
                 $numPages = getHowManyPages($filter);
