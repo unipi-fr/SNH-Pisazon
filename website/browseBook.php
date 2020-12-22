@@ -32,7 +32,8 @@ require "bookManager.php"; ?>
     </header>
 
     <main class="flex-shrink-0">
-        <?php printSuccessSessionMessage() ?>
+        <?php printSuccessSessionMessage(); ?>
+        <?php printErrorSessionMessage(); ?>
         <div class="container">
             <div class="row">
                 <?php

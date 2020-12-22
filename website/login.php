@@ -1,4 +1,9 @@
-<?php require_once "sessionManager.php"?>
+<?php require_once "sessionManager.php";
+    if(isset($_SESSION['idUser'])){ // if we backtrace in the history we don't want to see this page again after loggin in  
+        header("location: BrowseBook.php");
+
+    }
+?>
 <!doctype html>
 <html lang="en" class="h-100">
 

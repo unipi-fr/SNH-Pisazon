@@ -1,20 +1,44 @@
-<?php 
+<?php
 session_start();
 
-function isUserLogged(){
-    return isset($_SESSION['idUser']) && isset($_SESSION['username']) && isset($_SESSION['email']);
+function isUserLogged()
+{
+	return isset($_SESSION['idUser']) && isset($_SESSION['username']) && isset($_SESSION['email']);
 }
 
-function getSessionUserId(){
+function getSessionUserId()
+{
 	return $_SESSION['idUser'];
 }
 
-function getSessionUsername(){
+function getSessionUsername()
+{
 	return $_SESSION['username'];
 }
 
-function getSessionEmail(){
+function getSessionEmail()
+{
 	return $_SESSION['email'];
+}
+
+function setSessionBook($id_ebook)
+{
+	$_SESSION['buyingItem'] = $id_ebook;
+}
+
+function getSessionBook()
+{
+	return $_SESSION['buyingItem'];
+}
+
+function checkBook()
+{
+	return isset($_SESSION['buyingItem']);
+}
+
+function resetBook()
+{
+	unset($_SESSION['buyingItem']);
 }
 
 function logout()
@@ -23,18 +47,21 @@ function logout()
 	header('location: index.php');
 }
 
-function setErrorMessage($message){
+function setErrorMessage($message)
+{
 	$_SESSION["errorMessage"] = $message;
 }
 
-function isThereAnyErrorMessage(){
+function isThereAnyErrorMessage()
+{
 	return isset($_SESSION["errorMessage"]) && strlen($_SESSION["errorMessage"]) > 0;
 }
 
-function readErrorMessage($readOnce = true){
-	if(isset($_SESSION["errorMessage"])){
+function readErrorMessage($readOnce = true)
+{
+	if (isset($_SESSION["errorMessage"])) {
 		$tmp = $_SESSION["errorMessage"];
-		if($readOnce){
+		if ($readOnce) {
 			unset($_SESSION["errorMessage"]);
 		}
 		return $tmp;
@@ -42,28 +69,32 @@ function readErrorMessage($readOnce = true){
 	return "";
 }
 
-function printErrorSessionMessage(){
-	if(isThereAnyErrorMessage()){
-		?>
+function printErrorSessionMessage()
+{
+	if (isThereAnyErrorMessage()) {
+?>
 		<div class="alert alert-danger mt-2">
-			<strong>Error!</strong> <?php echo readErrorMessage()?>
+			<strong>Error!</strong> <?php echo readErrorMessage() ?>
 		</div>
-		<?php
+	<?php
 	}
 }
 
-function setSuccessMessage($message){
+function setSuccessMessage($message)
+{
 	$_SESSION["successMessage"] = $message;
 }
 
-function isThereAnySuccessMessage(){
+function isThereAnySuccessMessage()
+{
 	return isset($_SESSION["successMessage"]) && strlen($_SESSION["successMessage"]) > 0;
 }
 
-function readSuccessMessage($readOnce = true){
-	if(isset($_SESSION["successMessage"])){
+function readSuccessMessage($readOnce = true)
+{
+	if (isset($_SESSION["successMessage"])) {
 		$tmp = $_SESSION["successMessage"];
-		if($readOnce){
+		if ($readOnce) {
 			unset($_SESSION["successMessage"]);
 		}
 		return $tmp;
@@ -71,13 +102,14 @@ function readSuccessMessage($readOnce = true){
 	return "";
 }
 
-function printSuccessSessionMessage(){
-	if(isThereAnySuccessMessage()){
+function printSuccessSessionMessage()
+{
+	if (isThereAnySuccessMessage()) {
 	?>
 		<div class="alert alert-success mt-2">
-			<strong>Success!</strong> <?php echo readSuccessMessage()?>
+			<strong>Success!</strong> <?php echo readSuccessMessage() ?>
 		</div>
-	<?php
+<?php
 	}
 }
 
