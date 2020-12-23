@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2020 at 05:00 PM
+-- Generation Time: Dec 23, 2020 at 12:41 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -69,6 +69,18 @@ INSERT INTO `orders` (`id`, `id_buyer`, `id_ebook`, `date`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tokens`
+--
+
+CREATE TABLE `tokens` (
+  `hash_token` varchar(128) NOT NULL,
+  `expiration_date` date NOT NULL,
+  `id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -106,6 +118,13 @@ ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `buyer_ebook_unique` (`id_buyer`,`id_ebook`),
   ADD KEY `FK_order_ebook` (`id_ebook`);
+
+--
+-- Indexes for table `tokens`
+--
+ALTER TABLE `tokens`
+  ADD PRIMARY KEY (`hash_token`),
+  ADD KEY `FK_tokens_user` (`id_user`);
 
 --
 -- Indexes for table `user`
@@ -146,6 +165,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `FK_order_user` FOREIGN KEY (`id_buyer`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tokens`
+--
+ALTER TABLE `tokens`
+  ADD CONSTRAINT `FK_tokens_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
