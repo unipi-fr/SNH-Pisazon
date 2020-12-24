@@ -27,7 +27,12 @@
             <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
             </br>
             <button class="w-100 btn btn-lg btn-dark" type="submit">Login</button>
-            <p> Don't have an account yet? <a href="register.php" class="link-dark">Register</a></p>
+            <p> 
+                Don't have an account yet? 
+                <a href="register.php" class="link-dark">Register</a>
+                <br>
+                <a href="passwordRecovery.php" class="link-dark"> Did you forget your password? </a>
+            </p>
         </form>
         <?php printSuccessSessionMessage() ?>
         <?php printErrorSessionMessage(); ?>

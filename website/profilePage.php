@@ -9,7 +9,7 @@ if (!isUserLogged()) {
 
 <!doctype html>
 <html lang="en">
-<header>
+<head>
     <?php include 'commonHeader.php'; ?>
 
     <script>
@@ -20,7 +20,7 @@ if (!isUserLogged()) {
     </script>
 
 
-</header>
+</head>
 
 <body class="with-navbar">
     <header>
@@ -63,7 +63,7 @@ if (!isUserLogged()) {
                     <?php printSuccessSessionMessage(); ?>
                 </div>
             </div>
-            <div class="col-md-auto border-right p-3">
+            <div class="col-md-9 border-right p-3">
                 <div class="row d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">User's ebooks</h4>
                     <div class="container">

@@ -1,6 +1,6 @@
 <?php
-require "sessionManager.php";
-require "dbManager.php";
+require_once "sessionManager.php";
+require_once "dbManager.php";
 
 $pageSize = 8;
 

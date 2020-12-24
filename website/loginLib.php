@@ -51,7 +51,7 @@ function loginFailed($message, $loginStatement, $db, $activateDebug){
         $message = $message."<br><br>[DEBUG]<br>Code: ".$loginStatement->errno."<br>message: ".htmlspecialchars($loginStatement->error);
 	}
     $loginStatement->close();
-	$conn->closeConnection();
+	$db->closeConnection();
 	return false;    
 }
 
