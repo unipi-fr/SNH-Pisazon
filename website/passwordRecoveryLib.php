@@ -19,8 +19,7 @@ function sendPasswordRecoveryEmail($taintedEmail){
         return;
     }
 
-    setSuccessMessage("A mail has been sent to that email address. <br> SHhhh.... here is your token: $token");
-    
+    setSuccessMessage("A mail has been sent. Check your email for the password reset link.<br><br> Shhhhh.... don't say to anyone but here is your link:<br> <a href='http://localhost/passwordReset.php?token=$token'>Password reset link!</a>");   
 }
 
 function storeTokenForUser($token, $userId){ // controllare che non ci sia già un altro token

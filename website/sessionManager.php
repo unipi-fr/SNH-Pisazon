@@ -21,6 +21,14 @@ function getSessionEmail()
 	return $_SESSION['email'];
 }
 
+function setSessionTokenUserId($userId){
+	$_SESSION['tokenUserId'] = $userId;
+}
+
+function isSessionTokenValid(){
+	return isset($_SESSION["tokenUserId"]) && $_SESSION["tokenUserId"] !== false;
+}
+
 function setSessionBook($id_ebook)
 {
 	$_SESSION['buyingItem'] = $id_ebook;
