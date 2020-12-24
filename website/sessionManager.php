@@ -21,12 +21,24 @@ function getSessionEmail()
 	return $_SESSION['email'];
 }
 
-function setSessionTokenUserId($userId){
+function setSessionTokenUserId($userId)
+{
 	$_SESSION['tokenUserId'] = $userId;
 }
 
-function isSessionTokenValid(){
+function isSessionTokenValid()
+{
 	return isset($_SESSION["tokenUserId"]) && $_SESSION["tokenUserId"] !== false;
+}
+
+function resetSessionTokenUserId()
+{
+	unset($_SESSION['tokenUserId']);
+}
+
+function getSessionTokenUserId()
+{
+	return $_SESSION['tokenUserId'];
 }
 
 function setSessionBook($id_ebook)

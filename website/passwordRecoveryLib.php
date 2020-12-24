@@ -1,28 +1,32 @@
 <?php
 require_once "sessionManager.php";
 require_once "dbManager.php";
+require_once "mailSender.php";
 
 $activateDebug = true;
 $minutesOfValidity = 10;
 
-function sendPasswordRecoveryEmail($taintedEmail){
+function sendPasswordRecoveryEmail($taintedEmail)
+{
     $user = getUserForRecovery($taintedEmail);
-    if($user === false){
+    if ($user === false) {
         setSuccessMessage("A mail has been sent to that email address.");
         return;
     }
-    
+
     $token = generateToken(64);
     $userId = $user["id"];
-    $result = storeTokenForUser($token, $user["id"]);
-    if($result === false){
+    $result = storeTokenForUser($token, $userId);
+    if ($result === false) {
         return;
     }
 
-    setSuccessMessage("A mail has been sent. Check your email for the password reset link.<br><br> Shhhhh.... don't say to anyone but here is your link:<br> <a href='http://localhost/passwordReset.php?token=$token'>Password reset link!</a>");   
+    sendEmail($user["email"], $token);
+    setSuccessMessage("A mail has been sent. Check your email for the password reset link.<br><br> Shhhhh.... don't tell to anyone but here is your link:<br> <a href='http://localhost/passwordReset.php?token=$token'>Password reset link!</a>");
 }
 
-function storeTokenForUser($token, $userId){ // controllare che non ci sia già un altro token
+function storeTokenForUser($token, $userId)
+{ // controllare che non ci sia già un altro token
     global $db;
     global $activateDebug;
     global $minutesOfValidity;
@@ -34,29 +38,29 @@ function storeTokenForUser($token, $userId){ // controllare che non ci sia già 
 
     $insertUserTokenStatement = $conn->prepare("INSERT INTO tokens (id_user, expiration_date, hash_token) VALUES (?, $tokenValidity, ?) ON DUPLICATE KEY UPDATE expiration_date = $tokenValidity, hash_token = ?;");
 
-    if($insertUserTokenStatement === false){
-		return passwordRecoveryFailed("We can't elaborate your request, please try later.",$insertUserTokenStatement,$db,$activateDebug);
+    if ($insertUserTokenStatement === false) {
+        return passwordRecoveryFailed("We can't elaborate your request, please try later.", $insertUserTokenStatement, $db, $activateDebug);
     }
-    
+
     $result = $insertUserTokenStatement->bind_param("iss", $userId, $hashToken, $hashToken);
-    if($result === false){
-		return passwordRecoveryFailed("We can't elaborate your request, please try later.",$insertUserTokenStatement,$db,$activateDebug);
+    if ($result === false) {
+        return passwordRecoveryFailed("We can't elaborate your request, please try later.", $insertUserTokenStatement, $db, $activateDebug);
     }
 
     $result = $insertUserTokenStatement->execute();
 
-    if($result === false){
-		return passwordRecoveryFailed("We can't elaborate your request. try later.", $insertUserTokenStatement, $db, $activateDebug);
-	}
-	
-	$insertUserTokenStatement->close();
-    $db->closeConnection();
-    
-    return true;
+    if ($result === false) {
+        return passwordRecoveryFailed("We can't elaborate your request. try later.", $insertUserTokenStatement, $db, $activateDebug);
+    }
 
+    $insertUserTokenStatement->close();
+    $db->closeConnection();
+
+    return true;
 }
 
-function generateToken($charLenght){
+function generateToken($charLenght)
+{
     //Generate a random string.
     $token = openssl_random_pseudo_bytes($charLenght);
 
@@ -65,14 +69,15 @@ function generateToken($charLenght){
     return $token;
 }
 
-function passwordRecoveryFailed($reason, $statement, $db, $activateDebug = false){ 
-    if($activateDebug && $statement !== null){
-        $reason = $reason."<br><br>[DEBUG]<br>Code: ".$statement->errno."<br>message: ".htmlspecialchars($statement->error);
+function passwordRecoveryFailed($reason, $statement, $db, $activateDebug = false)
+{
+    if ($activateDebug && $statement !== null) {
+        $reason = $reason . "<br><br>[DEBUG]<br>Code: " . $statement->errno . "<br>message: " . htmlspecialchars($statement->error);
     }
-    
+
     setErrorMessage($reason);
 
-    if($statement !== null) 
+    if ($statement !== null)
         $statement->close();
 
     $db->closeConnection();
@@ -81,70 +86,36 @@ function passwordRecoveryFailed($reason, $statement, $db, $activateDebug = false
 }
 
 
-function getUserForRecovery($taintedEmail){     // prepared statement che controlla se l'email dell'utente di sessione corrisponde con quella inserita nel form
+function getUserForRecovery($taintedEmail)
+{     // prepared statement che controlla se l'email dell'utente di sessione corrisponde con quella inserita nel form
     global $db;
     global $activateDebug;
 
     $conn = $db->getConn();
 
     $getUserStatement = $conn->prepare("SELECT * FROM user WHERE email=?;");
-	if($getUserStatement === false){
-		return passwordRecoveryFailed("We can't elaborate your request, please try later." ,$getUserStatement, $db, $activateDebug);
+    if ($getUserStatement === false) {
+        return passwordRecoveryFailed("We can't elaborate your request, please try later.", $getUserStatement, $db, $activateDebug);
     }
-    
-	$result = $getUserStatement->bind_param("s", $taintedEmail);
-	if($result === false){
-		return passwordRecoveryFailed("We can't elaborate your request, please try later.", $getUserStatement, $db, $activateDebug);
+
+    $result = $getUserStatement->bind_param("s", $taintedEmail);
+    if ($result === false) {
+        return passwordRecoveryFailed("We can't elaborate your request, please try later.", $getUserStatement, $db, $activateDebug);
     }
-    
+
     $result = $getUserStatement->execute();
-	if($result === false){
-		return passwordRecoveryFailed("We can't elaborate your request. try later.", $getUserStatement, $db, $activateDebug);
+    if ($result === false) {
+        return passwordRecoveryFailed("We can't elaborate your request. try later.", $getUserStatement, $db, $activateDebug);
     }
-    
-	$result = $getUserStatement->get_result();
-	$getUserStatement->close();
+
+    $result = $getUserStatement->get_result();
+    $getUserStatement->close();
     $db->closeConnection();
-    
-    if($result->num_rows != 1){ // user not found
-		return false;
+
+    if ($result->num_rows != 1) { // user not found
+        return false;
     }
 
     $row = $result->fetch_assoc();
     return $row;
 }
-
-function changePassword($idUser, $newPass){
-    global $db;
-    global $activateDebug;
-
-    $conn = $db->getConn();
-    
-    $updateStatement = $conn->prepare("UPDATE user SET hash_pass = ? WHERE id = ?;");
-
-    if($updateStatement === false){
-        return passwordRecoveryFailed("We can't elaborate your request. try later.", $updateStatement, $db, $activateDebug);
-    }
-
-    $hashNewPass;
-    $result = $updateStatement->bind_param("si", $hashNewPass, $idUser);
-    if($result === false){
-        return passwordRecoveryFailed("We can't elaborate your request. try later.", $updateStatement, $db, $activateDebug);
-    }
-
-    $hashNewPass = password_hash($newPass, PASSWORD_DEFAULT);
-
-    $result = $updateStatement->execute();
-    
-    $updateStatement->close();
-    
-    $db->closeConnection();
-
-    if($result === false){
-        return passwordRecoveryFailed("We can't elaborate your request. try later.", $updateStatement, $db, $activateDebug);
-    }
-
-    setSuccessMessage("Password changed.");
-    return true;
-}
-?>

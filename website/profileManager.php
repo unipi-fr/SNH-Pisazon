@@ -2,16 +2,17 @@
 require_once "sessionManager.php"; // for isUserLogged()
 require_once "dbManager.php"; // for getConn()
 require_once "loginLib.php"; // for authenticateByUserId()
-require_once "passwordRecoveryLib.php"; // for password update function
+require_once "passwordResetLib.php"; // for password update function
 
-if (!isUserLogged()){
+if (!isUserLogged()) {
     header('location: ./index.php');
 }
 
 
-function updatePasswordFailed($reason, $updateStatement, $db){ // to be called in all other occations
+function updatePasswordFailed($reason, $updateStatement, $db)
+{ // to be called in all other occations
     setErrorMessage($reason);
-    if($updateStatement !== null) $updateStatement->close();
+    if ($updateStatement !== null) $updateStatement->close();
     $db->closeConnection();
     header('location: profilePage.php');
 }
@@ -26,13 +27,9 @@ $oldPass = $_POST['oldPassword'];
 $newPass = $_POST['newPassword'];
 
 $user = authenticateByUsername($username, $oldPass);
-if($user === false){ 
+if ($user === false) {
     updatePasswordFailed($loginMessage, null,  $db);
-}
-else{
+} else {
     changePassword($idUser, $newPass);
     header('location: profilePage.php');
-    
 }
-
-?>
