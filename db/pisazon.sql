@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2020 at 12:41 PM
+-- Generation Time: Dec 24, 2020 at 11:23 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -74,7 +74,7 @@ INSERT INTO `orders` (`id`, `id_buyer`, `id_ebook`, `date`) VALUES
 
 CREATE TABLE `tokens` (
   `hash_token` varchar(128) NOT NULL,
-  `expiration_date` date NOT NULL,
+  `expiration_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -123,8 +123,8 @@ ALTER TABLE `orders`
 -- Indexes for table `tokens`
 --
 ALTER TABLE `tokens`
-  ADD PRIMARY KEY (`hash_token`),
-  ADD KEY `FK_tokens_user` (`id_user`);
+  ADD PRIMARY KEY (`id_user`),
+  ADD KEY `id_user` (`id_user`);
 
 --
 -- Indexes for table `user`
