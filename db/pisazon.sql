@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2020 at 11:23 AM
+-- Generation Time: Dec 24, 2020 at 11:58 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -124,6 +124,7 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `tokens`
   ADD PRIMARY KEY (`id_user`),
+  ADD UNIQUE KEY `hash_token` (`hash_token`),
   ADD KEY `id_user` (`id_user`);
 
 --
