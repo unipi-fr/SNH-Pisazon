@@ -9,6 +9,7 @@ if (!isUserLogged()) {
 
 <!doctype html>
 <html lang="en">
+
 <head>
     <?php include 'commonHeader.php'; ?>
 
@@ -71,7 +72,7 @@ if (!isUserLogged()) {
                             <?php
 
                             $sessionUser = getSessionUserId();
-                            
+
                             $numPages = getHowManyPages("", $sessionUser);
 
                             $activePage = 1;

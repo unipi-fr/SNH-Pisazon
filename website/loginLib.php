@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once "dbManager.php";
 
 $loginMessage = null;
@@ -25,7 +25,7 @@ function authenticate($email, $password)
 	global $db;
 	$email = $db->sqlInjectionFilter($email);
 
-	$queryText = "select * from user where email='" . $email ."';";
+	$queryText = "select * from user where email='" . $email . "';";
 
 	$result = $db->performQuery($queryText);
 	$numRow = mysqli_num_rows($result);
@@ -37,62 +37,60 @@ function authenticate($email, $password)
 
 	$hash_pass = $row['hash_pass'];
 
-	if(password_verify($password, $hash_pass)){
+	if (password_verify($password, $hash_pass)) {
 		return $row;
-	}
-	else{
+	} else {
 		return 0;
 	}
 }
 
-function loginFailed($message, $loginStatement, $db, $activateDebug){
+function loginFailed($message, $loginStatement, $db, $activateDebug)
+{
 	$loginMessage = $message;
-	if($activateDebug){
-        $message = $message."<br><br>[DEBUG]<br>Code: ".$loginStatement->errno."<br>message: ".htmlspecialchars($loginStatement->error);
+	if ($activateDebug) {
+		$message = $message . "<br><br>[DEBUG]<br>Code: " . $loginStatement->errno . "<br>message: " . htmlspecialchars($loginStatement->error);
 	}
-    $loginStatement->close();
+	$loginStatement->close();
 	$db->closeConnection();
-	return false;    
+	return false;
 }
 
-function authenticateByUsername($username, $password, $activateDebug = false){
+function authenticateByUsername($username, $password, $activateDebug = false)
+{
 	global $loginMessage;
 	global $db;
 	$conn = $db->getConn();
 
 	$loginStatement = $conn->prepare("SELECT * FROM user WHERE username=?;");
-	if($loginStatement === false){
+	if ($loginStatement === false) {
 		return loginFailed("We can't elaborate your request. try later.", $loginStatement, $db, $activateDebug);
 	}
 	$result = $loginStatement->bind_param("s", $username);
-	if($result === false){
+	if ($result === false) {
 		return loginFailed("We can't elaborate your request. try later.", $loginStatement, $db, $activateDebug);
 	}
 
 	$result = $loginStatement->execute();
-	if($result === false){
+	if ($result === false) {
 		return loginFailed("We can't elaborate your request. try later.", $loginStatement, $db, $activateDebug);
 	}
 	$result = $loginStatement->get_result();
 	$loginStatement->close();
 	$db->closeConnection();
-    
-	
-    if($result->num_rows != 1){ // user not found
-        $loginMessage = "Invalid username or password.";
+
+
+	if ($result->num_rows != 1) { // user not found
+		$loginMessage = "Invalid username or password.";
 		return false;
 	}
 	$row = $result->fetch_assoc();
 
 	$hash_pass = $row['hash_pass'];
 
-	if(password_verify($password, $hash_pass)){
+	if (password_verify($password, $hash_pass)) {
 		return $row;
-	}
-	else{
+	} else {
 		$loginMessage = "Invalid username or password.";
 		return false;
 	}
 }
-
-?>

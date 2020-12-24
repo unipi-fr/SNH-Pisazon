@@ -22,7 +22,7 @@ global $loginMessage;
 
 $debugMessages = true;
 
-$userId = getSessionUserId();
+$username = getSessionUsername();
 $oldPass = $_POST['oldPassword'];
 $newPass = $_POST['newPassword'];
 
@@ -30,6 +30,6 @@ $user = authenticateByUsername($username, $oldPass);
 if ($user === false) {
     updatePasswordFailed($loginMessage, null,  $db);
 } else {
-    changePassword($idUser, $newPass);
+    changePassword($user['id'], $newPass);
     header('location: profilePage.php');
 }
