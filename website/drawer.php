@@ -17,9 +17,7 @@ function drawCard($title, $author, $price, $id, $type)
                                 <a href="" <?php echo 'class="btn btn-dark ' . $type . '-button float-right" id="' . $id . '"' ?>> <?php echo $type ?> </a>
                             <?php }
                             if (!(strcmp($type, "Download"))) { ?>
-                                <form method="get" action="/ebook/Libro1.pdf">
-                                    <button type="submit" <?php echo 'class="btn btn-dark ' . $type . '-button float-right" id="' . $id . '"' ?>> <?php echo $type ?> </button>
-                                </form>
+                                <a <?php echo 'href="downloadBook.php?book=' . $id . '"' ?> class="btn btn-dark float-right"> <?php echo $type ?> </a>
                             <?php } ?>
                         <?php } ?>
                     </div>
