@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2020 at 11:58 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.0
+-- Creato il: Dic 26, 2020 alle 16:15
+-- Versione del server: 10.4.17-MariaDB
+-- Versione PHP: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,9 +26,10 @@ USE `pisazon`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ebook`
+-- Struttura della tabella `ebook`
 --
 
+DROP TABLE IF EXISTS `ebook`;
 CREATE TABLE `ebook` (
   `id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
@@ -37,7 +38,7 @@ CREATE TABLE `ebook` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `ebook`
+-- Dump dei dati per la tabella `ebook`
 --
 
 INSERT INTO `ebook` (`id`, `title`, `author`, `price`) VALUES
@@ -48,9 +49,10 @@ INSERT INTO `ebook` (`id`, `title`, `author`, `price`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- Struttura della tabella `orders`
 --
 
+DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `id_buyer` int(11) NOT NULL,
@@ -59,7 +61,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `orders`
+-- Dump dei dati per la tabella `orders`
 --
 
 INSERT INTO `orders` (`id`, `id_buyer`, `id_ebook`, `date`) VALUES
@@ -69,9 +71,10 @@ INSERT INTO `orders` (`id`, `id_buyer`, `id_ebook`, `date`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tokens`
+-- Struttura della tabella `tokens`
 --
 
+DROP TABLE IF EXISTS `tokens`;
 CREATE TABLE `tokens` (
   `hash_token` varchar(128) NOT NULL,
   `expiration_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -81,38 +84,41 @@ CREATE TABLE `tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struttura della tabella `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `hash_pass` varchar(255) NOT NULL
+  `hash_pass` varchar(255) NOT NULL,
+  `attempts` int(11) NOT NULL DEFAULT 0,
+  `locked_until` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user`
+-- Dump dei dati per la tabella `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `email`, `hash_pass`) VALUES
-(1, 'boh', 'boh@gmail.com', '$2y$10$.FKsaUjhJvTgizT43f6dK.LZ.GM4rWGknnys8VoIDT3CS5N7dLRB6'),
-(4, 'caio', 'caio@gmail.com', '$2y$10$vBHGmiaY8RljP60BumVUv.zKTD8TrEsSvz3xzgNKjpNXmE6vC/Cy2'),
-(8, 'tizio', 'tizio@mail.com', '$2y$10$4F8CeZWrKPK9Du0gTQUQOuW2L2BDOXOvZ/wd6C0.5HeSSwqWO7gWq');
+INSERT INTO `user` (`id`, `username`, `email`, `hash_pass`, `attempts`, `locked_until`) VALUES
+(1, 'boh', 'boh@gmail.com', '$2y$10$.FKsaUjhJvTgizT43f6dK.LZ.GM4rWGknnys8VoIDT3CS5N7dLRB6', 0, '2020-12-26 15:10:44'),
+(4, 'caio', 'caio@gmail.com', '$2y$10$vBHGmiaY8RljP60BumVUv.zKTD8TrEsSvz3xzgNKjpNXmE6vC/Cy2', 0, '2020-12-26 15:10:44'),
+(8, 'tizio', 'tizio@mail.com', '$2y$10$4F8CeZWrKPK9Du0gTQUQOuW2L2BDOXOvZ/wd6C0.5HeSSwqWO7gWq', 0, '2020-12-26 15:10:44');
 
 --
--- Indexes for dumped tables
+-- Indici per le tabelle scaricate
 --
 
 --
--- Indexes for table `ebook`
+-- Indici per le tabelle `ebook`
 --
 ALTER TABLE `ebook`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `Title_Author_Unique` (`author`,`title`);
 
 --
--- Indexes for table `orders`
+-- Indici per le tabelle `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
@@ -120,7 +126,7 @@ ALTER TABLE `orders`
   ADD KEY `FK_order_ebook` (`id_ebook`);
 
 --
--- Indexes for table `tokens`
+-- Indici per le tabelle `tokens`
 --
 ALTER TABLE `tokens`
   ADD PRIMARY KEY (`id_user`),
@@ -128,7 +134,7 @@ ALTER TABLE `tokens`
   ADD KEY `id_user` (`id_user`);
 
 --
--- Indexes for table `user`
+-- Indici per le tabelle `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
@@ -136,39 +142,39 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `email_UNIQUE` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT per le tabelle scaricate
 --
 
 --
--- AUTO_INCREMENT for table `ebook`
+-- AUTO_INCREMENT per la tabella `ebook`
 --
 ALTER TABLE `ebook`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `orders`
+-- AUTO_INCREMENT per la tabella `orders`
 --
 ALTER TABLE `orders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT per la tabella `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- Constraints for dumped tables
+-- Limiti per le tabelle scaricate
 --
 
 --
--- Constraints for table `orders`
+-- Limiti per la tabella `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `FK_order_user` FOREIGN KEY (`id_buyer`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `tokens`
+-- Limiti per la tabella `tokens`
 --
 ALTER TABLE `tokens`
   ADD CONSTRAINT `FK_tokens_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
