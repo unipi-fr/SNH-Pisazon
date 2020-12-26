@@ -1,7 +1,7 @@
 <?php
 require_once "sessionManager.php";
 
-if(!isUserLogged()){
+if (!isUserLogged()) {
     setErrorMessage("You must be logged in to buy a book.");
     header("location: login.php");
 }
@@ -27,21 +27,21 @@ if (!checkBook()) {
     <main class="central-form" style="max-width: 25rem;">
 
         <?php
-            if(isUserLogged()){
-                printSuccessSessionMessage();
-                printErrorSessionMessage();
-            }
-            ?>
+        if (isUserLogged()) {
+            printSuccessSessionMessage();
+            printErrorSessionMessage();
+        }
+        ?>
 
         <form id="form_payment" method="post" action="./paymentManager.php">
             <input name="action" value="payItem" type="hidden">
             <div class="mb-3">
                 <label for="cardNumber" class="form-label">Card Number</label>
-                <input name="cardNumber" type="text" class="form-control" id="cardNumber">
+                <input name="cardNumber" type="text" class="form-control" id="cardNumber" required pattern="^(\d\d\d\d \d\d\d\d \d\d\d\d \d\d\d\d)$" title="es: 1234 1234 1234 1234">
             </div>
             <div class="mb-3">
                 <label for="owner" class="form-label">Owner</label>
-                <input type="text" class="form-control" id="owner">
+                <input type="text" class="form-control" id="owner" required>
             </div>
             <div class="row mb-3">
                 <div class="col-9">
@@ -79,18 +79,13 @@ if (!checkBook()) {
                 </div>
                 <div class="col-3">
                     <label for="cvv" class="form-label">cvv</label>
-                    <input name="cvv" type="text" class="form-control" id="cvv">
+                    <input name="cvv" type="text" class="form-control" id="cvv" required pattern="^(\d\d\d)$" title="es: 123">
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        <script>
-            var form = document.getElementById("form_payment");
-            form.onsubmit = function(){
-                form.reset();
-            }
-        </script>
     </main>
+
 </body>
 
 </html>

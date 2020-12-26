@@ -3,6 +3,19 @@ require "sessionManager.php";
 require "dbManager.php";
 
 
+echo $_POST['action'];
+
+
+echo $_POST['cardNumber'];
+echo $_POST['expireMonth'];
+echo $_POST['expireYear'];
+echo $_POST['cvv'];
+
+
+
+
+
+/*
 if (!isset($_POST['action'])) { // someone tried to skip a step
     resetBook();
     header("location: BrowseBook.php");
@@ -30,6 +43,10 @@ switch ($action) {
         $year = $_POST['expireYear'];
         $cvv = $_POST['cvv'];
         $cardNumber = $_POST['cardNumber'];
+
+        echo $month . " " . $year . " " . $cvv . " " . $cardNumber;
+        echo '<br>';
+        echo $_POST['expireMonth'] . " " . $_POST['expireYear'] . " " . $_POST['cvv'] . " " . $_POST['cardNumber'];
 
         if (!checkCreditCard($month, $year, $cvv, $cardNumber)) {
             setErrorMessage("invalid Credit card :(");
@@ -88,7 +105,6 @@ function payItem()
 
     if ($buymentStatement->execute()) {
         $buymentStatement->close();
-        resetSessionBook();
         setSuccessMessage("successful purchase, you can download the book from the profile section ;-)");
         header('location: index.php');
     } else {
@@ -97,3 +113,4 @@ function payItem()
         header('location: paymentPage.php');
     }
 }
+*/

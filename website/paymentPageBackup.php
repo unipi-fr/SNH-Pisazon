@@ -1,5 +1,11 @@
 <?php
 require_once "sessionManager.php";
+
+if (!isUserLogged()) {
+    setErrorMessage("You must be logged in to buy a book.");
+    header("location: login.php");
+}
+
 if (!checkBook()) {
     // we haven't clicked on a buy button in the BrowseBook page
     header("location: BrowseBook.php");
@@ -20,8 +26,12 @@ if (!checkBook()) {
 
     <main class="central-form" style="max-width: 25rem;">
 
-        <?php printSuccessSessionMessage() ?>
-        <?php printErrorSessionMessage(); ?>
+        <?php
+        if (isUserLogged()) {
+            printSuccessSessionMessage();
+            printErrorSessionMessage();
+        }
+        ?>
 
         <form method="post" action="./paymentManager.php">
             <input name="action" value="payItem" type="hidden">

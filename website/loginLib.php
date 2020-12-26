@@ -87,7 +87,7 @@ function authenticateByUsername($username, $password, $activateDebug = false)
 	}
 }
 
-function resetUserAttempts($user){
+function resetUserAttempts($user, $activateDebug = false){
 	$userId = $user["id"];
 
 	global $db;
@@ -111,7 +111,7 @@ function resetUserAttempts($user){
 	return true;
 }
 
-function incrementUserAttempts($user){
+function incrementUserAttempts($user, $activateDebug = false){
 	$userId = $user["id"];
 	$attempts = $user["attempts"]+1;
 	$howManyMinutes = 0;

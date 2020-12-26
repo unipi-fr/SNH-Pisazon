@@ -53,6 +53,11 @@ function setSessionBook($id_ebook)
 	$_SESSION['buyingItem'] = $id_ebook;
 }
 
+function resetSessionBook()
+{
+	unset($_SESSION['buyingItem']);
+}
+
 function getSessionBook()
 {
 	return $_SESSION['buyingItem'];
