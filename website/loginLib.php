@@ -1,57 +1,40 @@
 <?php
 require_once "dbManager.php";
+require_once "sessionManager.php";
 
-$loginMessage = null;
+$activateDebug  = true;
 
-function login($email, $password)
+function login($username, $password)
 {
-	if ($email != null && $password != null) {
-		$ret = authenticate($email, $password);
-		if ($ret != 0) {
-			$_SESSION['username'] = $ret['username'];
-			$_SESSION['email'] = $ret['email'];
-			$_SESSION['idUser'] = $ret['id'];
-			return null;
+	global $activateDebug;
+
+	if ($username === null || $password === null) {
+		$loginMessage = 'You must provide all credentials.';
+		return false;
+	} 
+	
+	$ret = authenticateByUsername($username, $password, $activateDebug);
+	if ($ret !== false) {
+		setSessionUser($ret);
+		return true;
+	}
+
+	return $ret; //false
+}
+
+
+function loginFailed($message, $loginStatement = null, $db = null, $activateDebug = false)
+{
+	if($loginStatement !== null){
+		if ($activateDebug) {
+			$message = $message . "<br><br>[DEBUG]<br>Code: " . $loginStatement->errno . "<br>message: " . htmlspecialchars($loginStatement->error);
 		}
-	} else
-		return 'You should insert something';
-
-	return 'Invalid username or password';
-}
-
-// TODO: DA CAMBIAREEEEEE!!!!!
-function authenticate($email, $password)
-{
-	global $db;
-	$email = $db->sqlInjectionFilter($email);
-
-	$queryText = "select * from user where email='" . $email . "';";
-
-	$result = $db->performQuery($queryText);
-	$numRow = mysqli_num_rows($result);
-	if ($numRow != 1)
-		return 0;
-
-	$row = $result->fetch_assoc();
-	$db->closeConnection();
-
-	$hash_pass = $row['hash_pass'];
-
-	if (password_verify($password, $hash_pass)) {
-		return $row;
-	} else {
-		return 0;
+		$loginStatement->close();
 	}
-}
-
-function loginFailed($message, $loginStatement, $db, $activateDebug)
-{
-	$loginMessage = $message;
-	if ($activateDebug) {
-		$message = $message . "<br><br>[DEBUG]<br>Code: " . $loginStatement->errno . "<br>message: " . htmlspecialchars($loginStatement->error);
+	if($db !== null){
+		$db->closeConnection();
 	}
-	$loginStatement->close();
-	$db->closeConnection();
+	setErrorMessage($message);
 	return false;
 }
 
@@ -80,8 +63,7 @@ function authenticateByUsername($username, $password, $activateDebug = false)
 
 
 	if ($result->num_rows != 1) { // user not found
-		$loginMessage = "Invalid username or password.";
-		return false;
+		return loginFailed("Invalid username or password.");
 	}
 	$row = $result->fetch_assoc();
 
@@ -90,7 +72,6 @@ function authenticateByUsername($username, $password, $activateDebug = false)
 	if (password_verify($password, $hash_pass)) {
 		return $row;
 	} else {
-		$loginMessage = "Invalid username or password.";
-		return false;
+		return loginFailed("Invalid username or password.");
 	}
 }

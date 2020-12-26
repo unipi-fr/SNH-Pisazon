@@ -6,6 +6,13 @@ function isUserLogged()
 	return isset($_SESSION['idUser']) && isset($_SESSION['username']) && isset($_SESSION['email']);
 }
 
+function setSessionUser($user){
+
+	$_SESSION['username'] = $user['username'];
+	$_SESSION['email'] = $user['email'];
+	$_SESSION['idUser'] = $user['id'];
+}
+
 function getSessionUserId()
 {
 	return $_SESSION['idUser'];

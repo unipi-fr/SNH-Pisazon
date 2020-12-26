@@ -23,8 +23,8 @@
         <form method="post" action="./loginManager.php">
             <img src="assets/images/icon.png" class="mb-4" height="60">
             <h1 class="h3 mb-3 fw-normal">Please login</h1>
-            <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+            <input name="username" type="text" id="inputUsername" class="form-control" placeholder="Your username" required="" autofocus="">
+            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Your super secret password" required="">
             </br>
             <button class="w-100 btn btn-lg btn-dark" type="submit">Login</button>
             <p> 
