@@ -38,19 +38,23 @@ require "bookManager.php"; ?>
             <div class="row">
                 <?php
 
-                $idBuyer = getSessionUserId();
+                $idBuyer = -1;
+                if(isUserLogged()){
+                    $idBuyer = getSessionUserId();
+                }
+
 
                 $filter = "";
                 if (isset($_GET['title']))
                     $filter = $_GET['title'];
 
-                $numPages = getHowManyPages($filter, -1);
+                $numPages = getHowManyPages($filter);
 
                 $activePage = 1;
                 if (isset($_GET['page']) && is_numeric($_GET['page']))
                     $activePage = $_GET['page'];
 
-                $books = getBooks($activePage, $filter, -1);
+                $books = getBooks($activePage, $filter);
 
                 foreach ($books as $book) {
 

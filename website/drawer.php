@@ -12,14 +12,13 @@ function drawCard($title, $author, $price, $id, $type)
                         <p class="card-text"> Price: <?php echo $price ?>€ </p>
                     </div>
                     <div class="col md-6">
-                        <?php if (isset($_SESSION['username'])) {
+                        <?php
                             if (!(strcmp($type, "Buy"))) { ?>
                                 <a href="" <?php echo 'class="btn btn-dark ' . $type . '-button float-right" id="' . $id . '"' ?>> <?php echo $type ?> </a>
                             <?php }
                             if (!(strcmp($type, "Download"))) { ?>
                                 <a <?php echo 'href="downloadBook.php?book=' . $id . '"' ?> class="btn btn-dark float-right"> <?php echo $type ?> </a>
                             <?php } ?>
-                        <?php } ?>
                     </div>
                 </div>
             </div>

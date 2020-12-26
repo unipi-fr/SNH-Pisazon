@@ -4,13 +4,17 @@ require_once "dbManager.php";
 
 $pageSize = 8;
 
-function getHowManyPages($titleFilter, $userFilter)
+function getHowManyPages($titleFilter = "", $userFilter = -1)
 {
     global $db;
     global $pageSize;
 
+    $idBuyer = -1;
+    if(isUserLogged()){
+        $idBuyer = getSessionUserId();
+    }
+
     $titleFilter = '%' . $titleFilter . '%';
-    $idBuyer = getSessionUserId();
 
     $conn = $db->getConn();
     $bookStatement = $conn->prepare("SELECT count(*) as count
@@ -38,13 +42,17 @@ function getHowManyPages($titleFilter, $userFilter)
     return ceil($row['count'] / $pageSize);
 }
 
-function getBooks($page, $titleFilter, $userFilter)
+function getBooks($page, $titleFilter = "", $userFilter = -1)
 {
     global $pageSize;
     global $db;
 
+    $idBuyer = -1;
+    if(isUserLogged()){
+        $idBuyer = getSessionUserId();
+    }
+
     $titleFilter = '%' . $titleFilter . '%';
-    $idBuyer = getSessionUserId();
     $books = array();
 
     if ($page < 0)
