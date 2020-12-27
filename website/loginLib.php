@@ -10,9 +10,10 @@ function login($username, $password)
 
 	if ($username === null || $password === null) {
 		$loginMessage = 'You must provide all credentials.';
+		setErrorMessage($loginMessage);
 		return false;
-	} 
-	
+	}
+
 	$ret = authenticateByUsername($username, $password, $activateDebug);
 	if ($ret !== false) {
 		setSessionUser($ret);
@@ -25,16 +26,16 @@ function login($username, $password)
 
 function loginFailed($message, $loginStatement = null, $db = null, $activateDebug = false)
 {
-	if($loginStatement !== null){
+	if ($loginStatement !== null) {
 		if ($activateDebug) {
 			$message = $message . "<br><br>[DEBUG]<br>Code: " . $loginStatement->errno . "<br>message: " . htmlspecialchars($loginStatement->error);
 		}
 		$loginStatement->close();
 	}
-	if($db !== null){
+	if ($db !== null) {
 		$db->closeConnection();
 	}
-	
+
 	setErrorMessage($message);
 	return false;
 }
@@ -48,6 +49,7 @@ function authenticateByUsername($username, $password, $activateDebug = false)
 	if ($loginStatement === false) {
 		return loginFailed("We can't elaborate your request. try later.", $loginStatement, $db, $activateDebug);
 	}
+
 	$result = $loginStatement->bind_param("s", $username);
 	if ($result === false) {
 		return loginFailed("We can't elaborate your request. try later.", $loginStatement, $db, $activateDebug);
@@ -57,6 +59,7 @@ function authenticateByUsername($username, $password, $activateDebug = false)
 	if ($result === false) {
 		return loginFailed("We can't elaborate your request. try later.", $loginStatement, $db, $activateDebug);
 	}
+
 	$result = $loginStatement->get_result();
 	$loginStatement->close();
 	$db->closeConnection();
@@ -70,8 +73,8 @@ function authenticateByUsername($username, $password, $activateDebug = false)
 	// qui siamo sicuri che l'utente esiste
 	// dobbiamo controllare che l'account non sia lockato
 	$locked = $row["locked"];
-	if($locked){
-		if($activateDebug)
+	if ($locked) {
+		if ($activateDebug)
 			return loginFailed("Your account has been suspended for too many failed attempts.");
 		else
 			return loginFailed("Invalid username or password.");
@@ -79,6 +82,12 @@ function authenticateByUsername($username, $password, $activateDebug = false)
 
 	// se non è lockato posso controllare la password
 	$hash_pass = $row['hash_pass'];
+
+	if($hash_pass == null)
+	{
+		//account not activate yet
+		return loginFailed("Invalid username or password.");
+	}
 
 	if (password_verify($password, $hash_pass)) {
 		// se la verify va a buon fine bisogna resettare gli attemps sul db e il timestamp del blocco
@@ -90,7 +99,8 @@ function authenticateByUsername($username, $password, $activateDebug = false)
 	}
 }
 
-function resetUserAttempts($user, $activateDebug = false){
+function resetUserAttempts($user, $activateDebug = false)
+{
 	$userId = $user["id"];
 
 	global $db;
@@ -100,6 +110,7 @@ function resetUserAttempts($user, $activateDebug = false){
 	if ($updateStatement === false) {
 		return loginFailed("We can't elaborate your request. try later.", $updateStatement, $db, $activateDebug);
 	}
+
 	$result = $updateStatement->bind_param("i", $userId);
 	if ($result === false) {
 		return loginFailed("We can't elaborate your request. try later.", $updateStatement, $db, $activateDebug);
@@ -109,17 +120,19 @@ function resetUserAttempts($user, $activateDebug = false){
 	if ($result === false) {
 		return loginFailed("We can't elaborate your request. try later.", $updateStatement, $db, $activateDebug);
 	}
+
 	$updateStatement->close();
 	$db->closeConnection();
 	return true;
 }
 
-function incrementUserAttempts($user, $activateDebug = false){
+function incrementUserAttempts($user, $activateDebug = false)
+{
 	$userId = $user["id"];
-	$attempts = $user["attempts"]+1;
+	$attempts = $user["attempts"] + 1;
 	$howManyMinutes = 0;
-	if($attempts%5==0){
-		$howManyMinutes = 2 ** floor($attempts/5);
+	if ($attempts % 5 == 0) {
+		$howManyMinutes = 2 ** floor($attempts / 5);
 	}
 
 	global $db;
@@ -139,9 +152,8 @@ function incrementUserAttempts($user, $activateDebug = false){
 	if ($result === false) {
 		return loginFailed("We can't elaborate your request. try later.", $updateStatement, $db, $activateDebug);
 	}
-	
+
 	$updateStatement->close();
 	$db->closeConnection();
 	return true;
 }
-

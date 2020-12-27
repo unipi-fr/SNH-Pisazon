@@ -94,7 +94,7 @@ function changePassword($idUser, $newPass)
 
   $conn = $db->getConn();
 
-  $updateStatement = $conn->prepare("UPDATE user SET hash_pass = ? WHERE id = ?;");
+  $updateStatement = $conn->prepare("UPDATE user SET hash_pass = ?, attempts = 0, locked_until = CURRENT_TIMESTAMP() WHERE id = ?;");
 
   if ($updateStatement === false) {
     return passwordRecoveryFailed("We can't elaborate your request. try later.", $updateStatement, $db, $activateDebug);

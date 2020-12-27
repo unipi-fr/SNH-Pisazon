@@ -15,12 +15,12 @@ if (isset($_GET['logout'])) {
 		$cookie_value = $_COOKIE[$cookie_name] + 1;
 	}
 
-	setcookie($cookie_name, $cookie_value, time() + (120), "/"); // 120 means 2 minutes
-
 	if ($cookie_value > 5) {
-		setErrorMessage("User: $username will be blocked if it exists");
+		setErrorMessage("User $username will be blocked if it exists");
 		header('location: ./login.php');
 	} else {
+
+		setcookie($cookie_name, $cookie_value, time() + (120), "/"); // 120 means 2 minutes
 
 		if (login($username, $password) === true) {
 			header('location: ./index.php');

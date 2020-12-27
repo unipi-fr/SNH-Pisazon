@@ -6,6 +6,8 @@ use PHPMailer\PHPMailer\Exception;
 
 require 'mailServer/vendor/autoload.php';
 
+$mailSenderMessage = null;
+
 function sendEmail($emailTo, $token)
 {
     $emailToSend = " 
@@ -43,8 +45,11 @@ function sendEmail($emailTo, $token)
 
         //send the message
         $mail->send();
-
     } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        global $mailSenderMessage;
+        $mailSenderMessage = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        return false;
     }
+    
+    return true;
 }

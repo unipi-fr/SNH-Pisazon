@@ -8,9 +8,11 @@ $minutesOfValidity = 10;
 
 function sendPasswordRecoveryEmail($taintedEmail)
 {
+    global $activateDebug;
     $user = getUserForRecovery($taintedEmail);
+
+    setSuccessMessage("A mail has been sent to the email " . htmlspecialchars($taintedEmail) . ".<br> Check your email for the link.");
     if ($user === false) {
-        setSuccessMessage("A mail has been sent to that email address.");
         return;
     }
 
@@ -21,8 +23,15 @@ function sendPasswordRecoveryEmail($taintedEmail)
         return;
     }
 
-    sendEmail($user["email"], $token);
-    setSuccessMessage("A mail has been sent. Check your email for the password reset link.<br><br> Shhhhh.... don't tell to anyone but here is your link:<br> <a href='http://localhost/passwordReset.php?token=$token'>Password reset link!</a>");
+    if(sendEmail($user["email"], $token) === false){
+        global $mailSenderMessage;
+        setErrorMessage($mailSenderMessage);
+        return;
+    }
+    if($activateDebug){
+        $message = readSuccessMessage()."<br><br> Shhhhh.... don't tell to anyone but here is your link:<br> <a href='http://localhost/passwordReset.php?token=$token'>Password reset link!</a>";
+        setSuccessMessage($message);
+    }
 }
 
 function storeTokenForUser($token, $userId)
