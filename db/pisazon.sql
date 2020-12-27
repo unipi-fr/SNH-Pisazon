@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Dic 26, 2020 alle 16:15
--- Versione del server: 10.4.17-MariaDB
--- Versione PHP: 8.0.0
+-- Generation Time: Dec 27, 2020 at 04:34 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,10 +26,9 @@ USE `pisazon`;
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `ebook`
+-- Table structure for table `ebook`
 --
 
-DROP TABLE IF EXISTS `ebook`;
 CREATE TABLE `ebook` (
   `id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
@@ -38,7 +37,7 @@ CREATE TABLE `ebook` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dump dei dati per la tabella `ebook`
+-- Dumping data for table `ebook`
 --
 
 INSERT INTO `ebook` (`id`, `title`, `author`, `price`) VALUES
@@ -49,10 +48,9 @@ INSERT INTO `ebook` (`id`, `title`, `author`, `price`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `orders`
+-- Table structure for table `orders`
 --
 
-DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `id_buyer` int(11) NOT NULL,
@@ -61,7 +59,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dump dei dati per la tabella `orders`
+-- Dumping data for table `orders`
 --
 
 INSERT INTO `orders` (`id`, `id_buyer`, `id_ebook`, `date`) VALUES
@@ -71,10 +69,9 @@ INSERT INTO `orders` (`id`, `id_buyer`, `id_ebook`, `date`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `tokens`
+-- Table structure for table `tokens`
 --
 
-DROP TABLE IF EXISTS `tokens`;
 CREATE TABLE `tokens` (
   `hash_token` varchar(128) NOT NULL,
   `expiration_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -84,21 +81,20 @@ CREATE TABLE `tokens` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `user`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `hash_pass` varchar(255) NOT NULL,
+  `hash_pass` varchar(255) DEFAULT NULL,
   `attempts` int(11) NOT NULL DEFAULT 0,
   `locked_until` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dump dei dati per la tabella `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `hash_pass`, `attempts`, `locked_until`) VALUES
@@ -107,18 +103,18 @@ INSERT INTO `user` (`id`, `username`, `email`, `hash_pass`, `attempts`, `locked_
 (8, 'tizio', 'tizio@mail.com', '$2y$10$4F8CeZWrKPK9Du0gTQUQOuW2L2BDOXOvZ/wd6C0.5HeSSwqWO7gWq', 0, '2020-12-26 15:10:44');
 
 --
--- Indici per le tabelle scaricate
+-- Indexes for dumped tables
 --
 
 --
--- Indici per le tabelle `ebook`
+-- Indexes for table `ebook`
 --
 ALTER TABLE `ebook`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `Title_Author_Unique` (`author`,`title`);
 
 --
--- Indici per le tabelle `orders`
+-- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
@@ -126,7 +122,7 @@ ALTER TABLE `orders`
   ADD KEY `FK_order_ebook` (`id_ebook`);
 
 --
--- Indici per le tabelle `tokens`
+-- Indexes for table `tokens`
 --
 ALTER TABLE `tokens`
   ADD PRIMARY KEY (`id_user`),
@@ -134,7 +130,7 @@ ALTER TABLE `tokens`
   ADD KEY `id_user` (`id_user`);
 
 --
--- Indici per le tabelle `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
@@ -142,39 +138,39 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `email_UNIQUE` (`email`);
 
 --
--- AUTO_INCREMENT per le tabelle scaricate
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT per la tabella `ebook`
+-- AUTO_INCREMENT for table `ebook`
 --
 ALTER TABLE `ebook`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT per la tabella `orders`
+-- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT per la tabella `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- Limiti per le tabelle scaricate
+-- Constraints for dumped tables
 --
 
 --
--- Limiti per la tabella `orders`
+-- Constraints for table `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `FK_order_user` FOREIGN KEY (`id_buyer`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `tokens`
+-- Constraints for table `tokens`
 --
 ALTER TABLE `tokens`
   ADD CONSTRAINT `FK_tokens_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
