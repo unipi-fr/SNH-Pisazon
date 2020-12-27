@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2020 at 06:15 PM
+-- Generation Time: Dec 27, 2020 at 07:27 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -98,10 +98,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `hash_pass`, `attempts`, `locked_until`) VALUES
-(1, 'boh', 'boh@gmail.com', '$2y$10$.FKsaUjhJvTgizT43f6dK.LZ.GM4rWGknnys8VoIDT3CS5N7dLRB6', 0, '2020-12-26 15:10:44'),
-(4, 'caio', 'caio@gmail.com', '$2y$10$vBHGmiaY8RljP60BumVUv.zKTD8TrEsSvz3xzgNKjpNXmE6vC/Cy2', 0, '2020-12-26 15:10:44'),
+(1, 'boh', 'boh@mail.com', '$2y$10$.FKsaUjhJvTgizT43f6dK.LZ.GM4rWGknnys8VoIDT3CS5N7dLRB6', 0, '2020-12-26 15:10:44'),
+(4, 'caio', 'caio@mail.com', '$2y$10$vBHGmiaY8RljP60BumVUv.zKTD8TrEsSvz3xzgNKjpNXmE6vC/Cy2', 0, '2020-12-26 15:10:44'),
 (8, 'tizio', 'tizio@mail.com', '$2y$10$4F8CeZWrKPK9Du0gTQUQOuW2L2BDOXOvZ/wd6C0.5HeSSwqWO7gWq', 0, '2020-12-26 15:10:44'),
-(9, 'a', 'andrea2bak@yahoo.it', '$2y$10$Du9XyTUDcuZsoB2pwx8K/OO451iCwFVg64Zp2xHJ0HXr5el1dYSyu', 0, '2020-12-27 16:16:33'),
+(9, 'a', 'a@mail.com', '$2y$10$Du9XyTUDcuZsoB2pwx8K/OO451iCwFVg64Zp2xHJ0HXr5el1dYSyu', 0, '2020-12-27 16:16:33'),
 (11, 'b', 'b@mail.com', '$2y$10$t1FLjo.LTQxsLzgjNzkvaOfWJPirKqJ66walKeBsucLnbmeiQmKeS', 0, '2020-12-27 16:35:15');
 
 --
@@ -159,7 +159,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
@@ -181,18 +181,13 @@ DELIMITER $$
 --
 -- Events
 --
-CREATE DEFINER=`root`@`localhost` EVENT `Clean_Tokens_Older_Than_10_minutes_And_Users_Not_Registered` ON SCHEDULE EVERY 1 MINUTE STARTS '2020-12-27 18:10:35' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'Clean up tokens and users that did not complete the registration' DO BEGIN
-    
-    DELETE FROM user
-    WHERE id IN(
-		SELECT u.id
-		FROM user as u join token as t on u.id = t.id_user
-		WHERE u.hash_pass = null AND t.expiration_date < NOW()
-    );
-    
-    DELETE FROM tokens
-    WHERE expiration_date < NOW();
-    
+CREATE DEFINER=`root`@`localhost` EVENT `Clean_Tokens_Older_Than_10_minutes_And_Users_Not_Registered` ON SCHEDULE EVERY 1 MINUTE STARTS '2020-12-27 19:26:13' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'Clean up tokens and users that did not complete the registration' DO BEGIN
+	DELETE FROM tokens
+	WHERE expiration_date < NOW();
+
+	DELETE FROM user
+	WHERE hash_pass IS NULL AND
+		id NOT IN (SELECT id_user FROM tokens);
 	END$$
 
 DELIMITER ;

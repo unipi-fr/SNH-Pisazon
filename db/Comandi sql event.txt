@@ -8,15 +8,13 @@ ON SCHEDULE
   DO
 	BEGIN
     
-    DELETE FROM user
-    WHERE id IN(
-		SELECT u.id
-		FROM user as u join token as t on u.id = t.id_user
-		WHERE u.hash_pass = null AND t.expiration_date < NOW()
-    );
-    
-    DELETE FROM tokens
-    WHERE expiration_date < NOW();
+	DELETE FROM tokens
+	WHERE expiration_date < NOW();
+
+	DELETE FROM user
+	WHERE hash_pass IS NULL AND
+		id NOT IN (SELECT id_user FROM tokens);
+
     
 	END |
 
