@@ -1,0 +1,29 @@
+SET GLOBAL event_scheduler = ON;
+
+delimiter |
+CREATE EVENT IF NOT EXISTS Clean_Tokens_Older_Than_10_minutes_And_Users_Not_Registered
+ON SCHEDULE
+  EVERY 1 minute
+  COMMENT 'Clean up tokens and users that did not complete the registration.'
+  DO
+	BEGIN
+    
+    DELETE FROM user
+    WHERE id IN(
+		SELECT u.id
+		FROM user as u join token as t on u.id = t.id_user
+		WHERE u.hash_pass = null AND t.expiration_date < NOW()
+    );
+    
+    DELETE FROM tokens
+    WHERE expiration_date < NOW();
+    
+	END |
+
+delimiter ;
+	
+	
+SHOW EVENTS FROM pisazon;
+
+DROP EVENT IF EXISTS Clean_Tokens_Older_Than_10_minutes_And_Users_Not_Registered;
+
