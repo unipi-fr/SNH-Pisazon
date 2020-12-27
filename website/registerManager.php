@@ -16,13 +16,11 @@ function registrationFailed($message, $statement, $debugMessages){
     
     setErrorMessage($message);
     header('location: register.php');
+    die();
 }
 
 function checkEmailValidity($taintedEmail){
-    if (!preg_match("/^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/", $taintedEmail)) {
-        return false;
-    }
-    return true;
+    return filter_var($taintedEmail, FILTER_VALIDATE_EMAIL);
 }
 
 global $db;
@@ -57,8 +55,9 @@ if ($result === false) {
     switch ($registrationStatement->errno){
         case 1062: //unique key fault
             $message = "Registration complete.<br> now you have to activate your account :-)<br><br>A mail has been sent to the email " . htmlspecialchars($email) . ".<br> Check your email for the link.";
-            setSuccessMessage($successMessage);
+            setSuccessMessage($message);
             header('location: login.php');
+            die();
             break;
         default:
             $message = "We can't elaborate your request. try later.";
