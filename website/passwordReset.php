@@ -19,7 +19,7 @@ if ($token !== null) {
     if (checkValidToken($token) !== false) {
         if (isset($_POST["password"]) && isset($_POST["confirmPassword"])) {
             if ($_POST["password"] === $_POST["confirmPassword"]) {
-                if(changePasswordAndResetToken($_POST["password"]) === true){
+                if (changePasswordAndResetToken($_POST["password"]) === true) {
                     setSuccessMessage("Password changed <br> now you can log in with the new password");
                     header('location: ./login.php');
                 }
@@ -40,6 +40,7 @@ if ($token !== null) {
 
 <head>
     <?php include 'commonHeader.php'; ?>
+    <script src="./checks.js"></script>
 </head>
 
 <body class="with-navbar">
@@ -55,13 +56,14 @@ if ($token !== null) {
                         <div class="form-group">
                             <h2 for="emailAddress" class="">Select a new password</h2>
                             <label for="inputPassword" class="form-label">Password</label>
-                            <input name="password" type="password" id="inputPassword" class="form-control" required="">
+                            <input name="password" type="password" id="inputPassword" class="form-control" required="" oninput="checkpassword()">
+                            <?php include 'passwordChecks.php'; ?>
                             <label for="inputConfirmPassword" class="form-label">Confirm Password</label>
                             <input name="confirmPassword" type="password" id="inputConfirmPassword" class="form-control" required="">
                             <input name="token" type="text" class="d-none" value="<?php echo $token; ?>">
                         </div>
                         <div class="form-group mt-2">
-                            <button type="submit" class="btn btn-dark"> Save </button>
+                            <button type="submit" id="saveButton" class="btn btn-dark" disabled> Save </button>
                         </div>
                     </form>
                 <?php } ?>

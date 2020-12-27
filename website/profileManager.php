@@ -25,6 +25,12 @@ $debugMessages = true;
 $username = getSessionUsername();
 $oldPass = $_POST['oldPassword'];
 $newPass = $_POST['newPassword'];
+$confirmPass = $_POST['confirmPassword'];
+
+if (strcmp($newPass, $confirmPass)) {
+    updatePasswordFailed("Passowords don't match.", null,  $db);
+    die();
+}
 
 $user = authenticateByUsername($username, $oldPass);
 if ($user === false) {
