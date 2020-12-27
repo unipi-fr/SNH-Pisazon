@@ -33,7 +33,7 @@ switch ($action) {
 
         if (!checkCreditCard($month, $year, $cvv, $cardNumber)) {
             setErrorMessage("invalid Credit card :(");
-            //header('location: paymentPage.php');
+            header('location: paymentPage.php');
         } else {
             payItem();
         }

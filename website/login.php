@@ -1,9 +1,9 @@
 <?php require_once "sessionManager.php";
-    if(isset($_SESSION['idUser'])){ // if we backtrace in the history we don't want to see this page again after loggin in  
-        header("location: BrowseBook.php");
-
-    }
+if (isset($_SESSION['idUser'])) { // if we backtrace in the history we don't want to see this page again after loggin in  
+    header("location: BrowseBook.php");
+}
 ?>
+
 <!doctype html>
 <html lang="en" class="h-100">
 
@@ -27,8 +27,8 @@
             <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Your super secret password" required="">
             </br>
             <button class="w-100 btn btn-lg btn-dark" type="submit">Login</button>
-            <p> 
-                Don't have an account yet? 
+            <p>
+                Don't have an account yet?
                 <a href="register.php" class="link-dark">Register</a>
                 <br>
                 <a href="passwordRecovery.php" class="link-dark"> Did you forget your password? </a>

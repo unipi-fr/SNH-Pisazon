@@ -71,7 +71,10 @@ function authenticateByUsername($username, $password, $activateDebug = false)
 	// dobbiamo controllare che l'account non sia lockato
 	$locked = $row["locked"];
 	if($locked){
-		return loginFailed("Your account has been suspended for too many failed attempts.");
+		if($activateDebug)
+			return loginFailed("Your account has been suspended for too many failed attempts.");
+		else
+			return loginFailed("Invalid username or password.");
 	}
 
 	// se non è lockato posso controllare la password
