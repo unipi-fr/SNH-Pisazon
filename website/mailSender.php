@@ -8,23 +8,46 @@ require 'mailServer/vendor/autoload.php';
 
 $mailSenderMessage = null;
 
-function sendEmail($emailTo, $token)
+function sendEmail($emailTo, $token, $type) // type = 0 recovery email, type = 1 confirmation email for registration
 {
-    $emailToSend = " 
-    <html>
+    $emailToSend = "";
+    switch ($type) {
+        case 0:
+            $emailToSend = " 
+                <html>
+                    <head>
+                    </head>
 
-        <head>
-        </head>
+                    <body>
+                        <h3> PASSWORD RECOVERY </h3>
+                        <p> Click on the link to reset your password! </p>
+                        <a href='http://localhost/passwordReset.php?token=$token'> reset password </a>
+                        <p> Link valid for 10 minutes </p>
+                    </body>
 
-        <body>
-            <h3> PASSWORD RECOVERY </h3>
-            <p> Click on the link to reset your password! </p>
-            <a href='http://localhost/passwordReset.php?token=$token'> reset password </a>
-            <p> Link valid for 10 minutes </p>
-        </body>
+                </html>
+                ";
+            break;
+        case 1:
+            $emailToSend = " 
+                <html>
+                    <head>
+                    </head>
 
-    </html>
-    ";
+                    <body>
+                        <h3> COMPLETE YOUR REGISTRATION </h3>
+                        <p> Click on the link to set your password! </p>
+                        <a href='http://localhost/passwordReset.php?token=$token'> reset password </a>
+                        <p> Link valid for 10 minutes </p>
+                    </body>
+
+                </html>
+                ";
+            break;
+        default:
+            die('Access denied for this type!');
+    }
+
 
     $mail = new PHPMailer(true);
 
@@ -50,6 +73,6 @@ function sendEmail($emailTo, $token)
         $mailSenderMessage = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         return false;
     }
-    
+
     return true;
 }

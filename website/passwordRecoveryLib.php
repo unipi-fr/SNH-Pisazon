@@ -6,7 +6,7 @@ require_once "mailSender.php";
 $activateDebug = true;
 $minutesOfValidity = 10;
 
-function sendPasswordRecoveryEmail($taintedEmail)
+function sendPasswordRecoveryEmail($taintedEmail, $type)
 {
     global $activateDebug;
     $user = getUserForRecovery($taintedEmail);
@@ -23,7 +23,7 @@ function sendPasswordRecoveryEmail($taintedEmail)
         return;
     }
 
-    if(sendEmail($user["email"], $token) === false){
+    if(sendEmail($user["email"], $token, $type) === false){
         global $mailSenderMessage;
         setErrorMessage($mailSenderMessage);
         return;

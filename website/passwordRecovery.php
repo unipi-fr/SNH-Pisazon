@@ -6,7 +6,7 @@ if (isUserLogged()) {
 }
 
 if(isset($_POST["emailAddress"])){
-    sendPasswordRecoveryEmail($_POST["emailAddress"]);
+    sendPasswordRecoveryEmail($_POST["emailAddress"], 0); // type 0 for recovery email
 }
 ?>
 

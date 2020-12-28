@@ -66,7 +66,7 @@ if ($result === false) {
     }
 } else {
     //buon fine
-    sendPasswordRecoveryEmail($taintedEmail);
+    sendPasswordRecoveryEmail($taintedEmail, 1); // type 1 for confirmation email
     $successMessage = readSuccessMessage();
     setSuccessMessage("Registration complete.<br> now you have to activate your account :-)<br><br>".$successMessage);
     header('location: login.php');
