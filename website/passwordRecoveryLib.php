@@ -3,7 +3,7 @@ require_once "sessionManager.php";
 require_once "dbManager.php";
 require_once "mailSender.php";
 
-$activateDebug = true;
+$activateDebug = false;
 $minutesOfValidity = 10;
 
 function sendPasswordRecoveryEmail($taintedEmail, $type)

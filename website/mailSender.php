@@ -37,7 +37,7 @@ function sendEmail($emailTo, $token, $type) // type = 0 recovery email, type = 1
                     <body>
                         <h3> COMPLETE YOUR REGISTRATION </h3>
                         <p> Click on the link to set your password! </p>
-                        <a href='http://localhost/passwordReset.php?token=$token'> reset password </a>
+                        <a href='http://localhost/passwordReset.php?token=$token'> set password </a>
                         <p> Link valid for 10 minutes </p>
                     </body>
 

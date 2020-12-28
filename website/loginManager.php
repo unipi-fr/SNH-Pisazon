@@ -15,6 +15,8 @@ if (isset($_GET['logout'])) {
 		$cookie_value = $_COOKIE[$cookie_name] + 1;
 	}
 
+	echo $cookie_name;
+
 	if ($cookie_value > 5) {
 		setErrorMessage("User $username will be blocked if it exists");
 		header('location: ./login.php');

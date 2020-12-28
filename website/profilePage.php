@@ -72,11 +72,11 @@ function drawNoBookMessage()
                                 <label class="labels">Confirm password</label>
                                 <input type="password" class="form-control" placeholder="confirm super secret password" name="confirmPassword">
                             </div>
-                            <?php include 'passwordChecks.php'; ?>
                             <div class="col-md-12 mt-2">
                                 <button type="submit" id="saveButton" class="btn btn-dark me-2" disabled>Save</button>
                                 <button type="button" class="btn btn-secondary" onclick="toggleChangePassword()">Cancel</button>
                             </div>
+                            <?php include 'passwordChecks.php'; ?>
                         </div>
                     </form>
                     <?php printErrorSessionMessage(); ?>

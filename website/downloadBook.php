@@ -17,8 +17,8 @@ if (!isAuthorizedToDownloadThisBook($userId, $book)) {
     header('location: ./browseBook.php');
 }
 
-$fullPath = 'C:/Users/nella/Documents/GitHub/SNH-Pisazon/ebook/ebook2.pdf'; // this should be $filename = "ebook/ebook$book.pdf";
-$filename = '../ebook/ebook2.pdf';
+$fullPath = 'C:/Users/nella/Documents/GitHub/SNH-Pisazon/ebook/ebook' . $book . '.pdf'; // this should be $filename = "ebook/ebook$book.pdf";
+$filename = '../ebook/ebook' . $book . '.pdf';
 
 if (file_exists($fullPath)) {
     header('Content-Length: ' . filesize($file));

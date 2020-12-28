@@ -2,7 +2,7 @@
 require_once "dbManager.php";
 require_once "sessionManager.php";
 
-$activateDebug  = true;
+$activateDebug  = false;
 
 function login($username, $password)
 {

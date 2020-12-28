@@ -57,7 +57,6 @@ if ($token !== null) {
                             <h2 for="emailAddress" class="">Select a new password</h2>
                             <label for="inputPassword" class="form-label">Password</label>
                             <input name="password" type="password" id="inputPassword" class="form-control" required="" oninput="checkpassword()">
-                            <?php include 'passwordChecks.php'; ?>
                             <label for="inputConfirmPassword" class="form-label">Confirm Password</label>
                             <input name="confirmPassword" type="password" id="inputConfirmPassword" class="form-control" required="">
                             <input name="token" type="text" class="d-none" value="<?php echo $token; ?>">
@@ -66,6 +65,7 @@ if ($token !== null) {
                             <button type="submit" id="saveButton" class="btn btn-dark" disabled> Save </button>
                         </div>
                     </form>
+                    <?php include 'passwordChecks.php'; ?>
                 <?php } ?>
                 <?php printErrorSessionMessage(); ?>
             </div>

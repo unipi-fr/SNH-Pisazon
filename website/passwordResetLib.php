@@ -2,7 +2,7 @@
 require_once "sessionManager.php";
 require_once "dbManager.php";
 
-$activateDebug = true;
+$activateDebug = false;
 
 function checkValidToken($taintedToken)
 {
