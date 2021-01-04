@@ -17,10 +17,9 @@ if (!isAuthorizedToDownloadThisBook($userId, $book)) {
     header('location: ./browseBook.php');
 }
 
-$fullPath = 'C:/Users/nella/Documents/GitHub/SNH-Pisazon/ebook/ebook' . $book . '.pdf'; // this should be $filename = "ebook/ebook$book.pdf";
 $filename = '../ebook/ebook' . $book . '.pdf';
 
-if (file_exists($fullPath)) {
+if (file_exists($filename)) {
     header('Content-Length: ' . filesize($file));
     header("Content-type: application/pdf");
     header('Content-Disposition: attachment; filename="' . basename($filename) . '"');

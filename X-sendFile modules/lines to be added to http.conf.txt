@@ -1,0 +1,6 @@
+#
+# X-Sendfile
+#
+LoadModule xsendfile_module modules/mod_xsendfile.so
+XSendFile On
+XSendFilePath "<YOUR_ROOT_FOLDER>"

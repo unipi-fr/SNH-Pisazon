@@ -92,7 +92,8 @@ function payItem()
         setSuccessMessage("successful purchase, you can download the book from the profile section ;-)");
         header('location: index.php');
     } else {
-        setErrorMessage($buymentStatement->error);
+        setErrorMessage("We can't elaborate your request. try later.");
+        //setErrorMessage($buymentStatement->error);
         $buymentStatement->close();
         header('location: paymentPage.php');
     }
