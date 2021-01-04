@@ -10,9 +10,11 @@ $mailSenderMessage = null;
 
 function sendEmail($emailTo, $token, $type) // type = 0 recovery email, type = 1 confirmation email for registration
 {
+    $subject = "";
     $emailToSend = "";
     switch ($type) {
         case 0:
+            $subject = "Pisazon password reset";
             $emailToSend = " 
                 <html>
                     <head>
@@ -29,6 +31,7 @@ function sendEmail($emailTo, $token, $type) // type = 0 recovery email, type = 1
                 ";
             break;
         case 1:
+            $subject = "Pisazon registration";
             $emailToSend = " 
                 <html>
                     <head>
@@ -61,7 +64,7 @@ function sendEmail($emailTo, $token, $type) // type = 0 recovery email, type = 1
         $mail->Password = 'pisazonn';
         $mail->setFrom('pisazon.inc@gmail.com', 'Pisazon support');
         $mail->addAddress($emailTo, 'me');
-        $mail->Subject = 'Pisazon password reset';
+        $mail->Subject = $subject;
         $mail->msgHTML($emailToSend, __DIR__);
         $mail->AltBody = 'This is a plain-text message body';
         $mail->addAttachment('assets/images/logo.png');
